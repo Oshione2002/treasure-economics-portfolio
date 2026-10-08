@@ -39,7 +39,8 @@ const works=[
         assert.ok(text.includes(work.period));
         assert.match(text,/ARDL/);
         assert.ok(text.split(/\s+/).length>=100&&text.split(/\s+/).length<=250,'Concise research abstract');
-        assert.equal(await page.locator('.abstract-status').textContent(),'Unpublished research · Not peer reviewed');
+        assert.equal(await page.locator('.abstract-status').count(),0);
+        assert.doesNotMatch(await page.locator('main').textContent(),/Unpublished research|Not peer reviewed/);
         assert.doesNotMatch(await page.locator('main').textContent(),/coming soon|placeholder|sole author|wrote all/i,'No placeholder or unrequested authorship claims');
         assert.equal(await page.locator('.back-link').getAttribute('href'),'research.html');
         assert.equal(await page.locator('.next-study a').getAttribute('href'),work.next);
