@@ -32,6 +32,18 @@ async function expectSelection(page,type,subtype,count){
   assert.equal(await page.locator(`[data-filter-group="${type}"] ${secondary}[data-filter-subtype="${subtype}"]`).getAttribute('aria-pressed'),'true');
   assert.equal(await page.locator(`${primary}[aria-pressed="true"]`).count(),1);
   assert.equal(await page.locator(`${secondary}[aria-pressed="true"]`).count(),1);
+  const divider=await page.locator('.work-results-boundary').evaluate(boundary=>({
+    left:boundary.getBoundingClientRect().left,
+    right:boundary.getBoundingClientRect().right,
+    viewport:document.documentElement.clientWidth,
+    thickness:getComputedStyle(boundary).borderTopWidth,
+    firstCardBorder:getComputedStyle(boundary.querySelector('.work-card:not([hidden])')).borderTopWidth,
+    overflow:document.documentElement.scrollWidth>window.innerWidth,
+  }));
+  assert.ok(Math.abs(divider.left)<1&&Math.abs(divider.right-divider.viewport)<1,'Filter-to-work divider spans the page in every category');
+  assert.equal(divider.thickness,'1px');
+  assert.equal(divider.firstCardBorder,'0px','No doubled divider above the first visible work');
+  assert.equal(divider.overflow,false);
 }
 
 (async()=>{
