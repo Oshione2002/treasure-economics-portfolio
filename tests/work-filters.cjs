@@ -9,8 +9,8 @@ const primary='[data-filter-type]';
 const secondary='[data-filter-subtype]';
 const visibleCards='.work-card:visible';
 
-function fixture(subtype,number){
-  return `<article class="work-card" data-work-type="article" data-work-subtype="${subtype}"><div class="work-card-id"><span>${number}</span><span>Article</span></div><div class="work-card-main"><h2><a href="#main">Temporary ${subtype} article</a></h2><p>Test fixture only; never saved or published.</p></div></article>`;
+function fixture(subtype){
+  return `<article class="work-card" data-work-type="article" data-work-subtype="${subtype}"><div class="work-card-main"><h2><a href="#main">Temporary ${subtype} article</a></h2><p>Test fixture only; never saved or published.</p></div></article>`;
 }
 
 async function withFixtures(page,subtypes,{removeResearch=false,removeThesis=false}={}){
@@ -19,7 +19,7 @@ async function withFixtures(page,subtypes,{removeResearch=false,removeThesis=fal
     let html=await response.text();
     if(removeResearch)html=html.replace(/<article class="work-card[^>]*data-work-type="research"[\s\S]*?<\/article>/g,'');
     else if(removeThesis)html=html.replace(/<article class="work-card[^>]*data-work-subtype="thesis"[\s\S]*?<\/article>/,'');
-    const articles=subtypes.map((subtype,index)=>fixture(subtype,String(index+5).padStart(2,'0'))).join('');
+    const articles=subtypes.map(fixture).join('');
     html=html.replace('id="work-results">',`id="work-results">${articles}`);
     await route.fulfill({response,body:html});
   });
@@ -45,6 +45,12 @@ async function expectSelection(page,type,subtype,count){
       await page.goto(url);
       await expectSelection(page,'research','all',4);
       assert.equal(await page.locator(`${primary}[data-filter-type="article"]`).isVisible(),false);
+      assert.equal(await page.locator('.work-card-id').count(),0,'No project numbers or side labels');
+      const alignment=await page.locator('.work-card').evaluateAll(cards=>cards.map(card=>({
+        left:card.querySelector('.work-card-main').getBoundingClientRect().left,
+        expected:card.closest('.shell').getBoundingClientRect().left,
+      })));
+      alignment.forEach(card=>assert.ok(Math.abs(card.left-card.expected)<1,'Titles align with the content edge'));
       const layout=await page.evaluate(()=>({
         overflow:document.documentElement.scrollWidth>window.innerWidth,
         buttons:[...document.querySelectorAll('[data-work-filters] button')].filter(button=>button.getClientRects().length).map(button=>({
@@ -82,7 +88,7 @@ async function expectSelection(page,type,subtype,count){
       await thesis.focus();
       await thesis.press('Enter');
       await expectSelection(page,'research','thesis',1);
-      assert.deepEqual(await page.locator(`${visibleCards} .work-card-id span:first-child`).allTextContents(),['01']);
+      assert.deepEqual(await page.locator(`${visibleCards} h2 a`).evaluateAll(links=>links.map(link=>link.getAttribute('href'))),['work-government-spending-human-capital.html']);
       assert.equal(await thesis.evaluate(button=>button.matches(':focus-visible')),true);
       assert.notEqual(await thesis.evaluate(button=>getComputedStyle(button).outlineStyle),'none');
       await thesis.press('Tab');
@@ -90,7 +96,7 @@ async function expectSelection(page,type,subtype,count){
       assert.equal(await collaborations.evaluate(button=>button===document.activeElement),true);
       await collaborations.press('Space');
       await expectSelection(page,'research','collaboration',3);
-      assert.deepEqual(await page.locator(`${visibleCards} .work-card-id span:first-child`).allTextContents(),['02','03','04']);
+      assert.deepEqual(await page.locator(`${visibleCards} h2 a`).evaluateAll(links=>links.map(link=>link.getAttribute('href'))),['work-ecowas-free-movement.html','work-monetary-policy-sme-loans.html','work-public-debt-composition.html']);
       await page.getByRole('button',{name:'All Research',exact:true}).click();
       await expectSelection(page,'research','all',4);
       await thesis.click();
@@ -101,7 +107,7 @@ async function expectSelection(page,type,subtype,count){
       await expectSelection(page,'research','all',4);
       await page.locator('[data-work-filters]').scrollIntoViewIfNeeded();
       await page.screenshot({path:path.join(os.tmpdir(),`portfolio-work-filters-${width}.png`)});
-      console.log(`PASS ${width}px: counts 4/1/3, preserved numbering, keyboard/focus, reload, tap targets, no overflow`);
+      console.log(`PASS ${width}px: no side labels/numbers, left-aligned titles, counts 4/1/3, preserved order, keyboard/focus, reload, tap targets, no overflow`);
     }
     assert.deepEqual(errors,[],'No JavaScript errors');
     await page.close();

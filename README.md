@@ -31,7 +31,7 @@ Each card declares `data-work-type` and `data-work-subtype`:
 | `research` | `thesis`, `collaboration` |
 | `article` | `published`, `unpublished` |
 
-Keep the existing card structure and original displayed number when adding work. For example,
+Keep the existing title-and-description card structure when adding work (no side numbers or labels). For example,
 a future article card starts with `<article class="work-card" data-work-type="article" data-work-subtype="published">`.
 The first article automatically reveals Articles and its populated status filters; empty
 categories stay hidden. Do not add placeholder cards just to expose a category.
@@ -50,6 +50,6 @@ node tests/work-filters.cjs
 The default test URL is `http://127.0.0.1:8003/research.html`; set `PORTFOLIO_TEST_URL`
 to use another local port or the deployed page. `PORTFOLIO_BROWSER` defaults to `msedge`
 and can be set to `chrome`. The tests cover desktop, tablet, 390px mobile, keyboard
-controls, CSS support, original numbering, reload defaults, and JavaScript-off/load-failure
+controls, CSS support, left-aligned titles, original order, reload defaults, and JavaScript-off/load-failure
 fallbacks. Article fixtures are injected only into isolated browser responses and are
 never written to the portfolio. Screenshots are saved in the system temporary directory.
