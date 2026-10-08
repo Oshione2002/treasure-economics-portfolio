@@ -96,6 +96,7 @@ h1{font-size:clamp(2.8rem,4.4vw,4.75rem);max-width:820px}
 .section-heading h2{max-width:none;margin-top:0}
 .practice-layout h2,.about-grid h2{margin-top:0}
 .contact-layout{grid-template-columns:minmax(0,1fr) auto}
+.contact-layout a{justify-self:start;max-width:100%}
 .page-hero{padding:82px 0 68px}
 .page-hero-layout{grid-template-columns:1fr}
 .page-hero h1,.page-hero .page-intro{grid-column:1}

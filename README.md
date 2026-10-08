@@ -46,6 +46,7 @@ With Playwright available to Node, run the browser tests against the local serve
 ```bash
 node tests/work-filters.cjs
 node tests/about-page.cjs
+node tests/contact-ui.cjs
 ```
 
 The default test URL is `http://127.0.0.1:8003/research.html`; set `PORTFOLIO_TEST_URL`
@@ -56,3 +57,4 @@ fallbacks. Article fixtures are injected only into isolated browser responses an
 never written to the portfolio. Screenshots are saved in the system temporary directory.
 The About-page checks confirm the research-focused content, education and CV link,
 and the removal of commercial internships without leaving an empty section.
+Contact checks cover text-width email/phone underlines and research-focused form options.
