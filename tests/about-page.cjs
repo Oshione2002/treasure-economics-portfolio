@@ -16,6 +16,21 @@ const url=new URL('about.html',process.env.PORTFOLIO_TEST_URL||'http://127.0.0.1
       assert.doesNotMatch(text,/remote|intern|commercial|funding societies|elegant hoopoe|friendsurance|customer|sales|dashboard|power bi|tableau/i);
       assert.equal(await page.locator('.experience-section').count(),0);
       assert.equal(await page.locator('#methods .detail-list h3').count(),4);
+      assert.equal(await page.locator('#methods .detail-list>div>span').count(),0,'Method numbers removed');
+      const name=page.locator('.about-hero .about-name');
+      assert.equal(await name.textContent(),'Treasure Alelume');
+      const emphasis=await name.evaluate(element=>({color:getComputedStyle(element).color,weight:getComputedStyle(element).fontWeight}));
+      assert.equal(emphasis.color,'rgb(169, 56, 34)');
+      assert.equal(emphasis.weight,'700');
+      const methodAlignment=await page.locator('#methods .detail-list>div').evaluateAll(rows=>rows.map(row=>({
+        titleLeft:row.querySelector('h3').getBoundingClientRect().left,
+        rowLeft:row.getBoundingClientRect().left,
+        descriptionLeft:row.querySelector('p').getBoundingClientRect().left,
+      })));
+      methodAlignment.forEach(row=>{
+        assert.ok(Math.abs(row.titleLeft-row.rowLeft)<1,'No leftover number column');
+        if(width<=760)assert.ok(Math.abs(row.descriptionLeft-row.rowLeft)<1,'Mobile descriptions align under headings');
+      });
       assert.equal(await page.getByRole('heading',{name:'Research communication',exact:true}).count(),1);
       assert.equal(await page.getByRole('heading',{name:'Research tools',exact:true}).count(),1);
       assert.match(text,/Microsoft Office \(Excel, Word, PowerPoint\)/);
