@@ -28,12 +28,14 @@ Each card declares `data-work-type` and `data-work-subtype`:
 
 | Type | Subtypes |
 | --- | --- |
-| `research` | `thesis`, `collaboration` |
-| `article` | `published`, `unpublished` |
+| `research` | `personal`, `collaboration` |
+| `article` | `personal`, `collaboration` |
 
 Keep the existing title-and-description card structure when adding work (no side numbers or labels). For example,
-a future article card starts with `<article class="work-card" data-work-type="article" data-work-subtype="published">`.
-The first article automatically reveals Articles and its populated status filters; empty
+a future personal article card starts with `<article class="work-card" data-work-type="article" data-work-subtype="personal">`.
+Both types display Personal and Collaborations filters. The existing thesis is Personal;
+the other three research entries are Collaborations. Publication status is not a filter.
+The first article automatically reveals Articles and its populated ownership filters; empty
 categories stay hidden. Do not add placeholder cards just to expose a category.
 
 Filters reset to Research / All Research on reload (or the first populated type if
