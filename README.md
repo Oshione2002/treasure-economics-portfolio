@@ -8,10 +8,28 @@ An editorial, evidence-led static portfolio built with plain HTML, CSS and JavaS
 - `research.html` - selected research
 - `about.html` - research biography, methods, tools and education
 - `get-in-touch.html` - email/phone contact and enquiry form
-- `work-*.html` - four dedicated research case studies
+- `work-*.html` - four research abstract pages
 - `assets/Treasure-Alelume-CV.pdf` - downloadable CV
 
-The case studies distinguish Treasure's undergraduate thesis from research collaborations and do not claim that any work is peer reviewed or published. Full collaborative manuscripts are intentionally not distributed through the site.
+The abstract pages distinguish Treasure's undergraduate thesis from research collaborations and do not claim that any work is peer reviewed or published. Full collaborative manuscripts are intentionally not distributed through the site.
+
+## Abstract pages
+
+Each work page uses a shared title/type header and a single, readable abstract section,
+followed by links back to Work and onward to the next piece. There are no case-study
+statistics, contents navigation or separate analysis sections. Existing page URLs and
+old section fragments still resolve; their invisible anchors now lead to the abstract.
+
+The current abstracts are portfolio summaries drafted from the previous case-study
+content, not verbatim manuscript abstracts. Preserve methodological caveats when
+editing them, including the conflicting result descriptions in the SME-loans manuscript.
+Original abstracts can replace these summaries when supplied and checked.
+
+Future articles use the same `abstract-page`, `abstract-container`, `abstract-meta`
+and `abstract-copy` structure, with Article / Personal or Article / Collaboration
+as the type. Add contribution details only when Treasure confirms them; add publication
+details and links only when verified. Omit unavailable sections rather than placeholders.
+Do not create article entries until real content is supplied.
 
 ## Local preview
 
@@ -67,7 +85,7 @@ With Playwright available to Node, run the browser tests against the local serve
 node tests/work-filters.cjs
 node tests/about-page.cjs
 node tests/contact-ui.cjs
-node tests/case-contents.cjs
+node tests/abstract-pages.cjs
 ```
 
 The default test URL is `http://127.0.0.1:8003/research.html`; set `PORTFOLIO_TEST_URL`
@@ -81,7 +99,5 @@ and the removal of commercial internships without leaving an empty section.
 Contact checks cover text-width email/phone underlines and research-focused form options.
 They also mock delivery responses to test validation, success, activation, failures,
 timeouts and duplicate prevention without sending real email.
-Case-study checks cover sticky contents links below the main header, unobscured anchor
-headings, keyboard navigation, mobile-menu stacking and release before the footer.
-The horizontal contents bar stays sticky below 980px and wraps its links; JavaScript
-measures its height to keep section jumps clear. Sticky positioning also works without JavaScript.
+Abstract-page checks cover the shared layout, preserved research caveats, type labels,
+working navigation and old section fragments, mobile readability and JavaScript-off access.
