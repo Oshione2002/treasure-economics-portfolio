@@ -6,7 +6,7 @@ An editorial, evidence-led static portfolio built with plain HTML, CSS and JavaS
 
 - `index.html` - profile and featured work
 - `research.html` - selected research
-- `about.html` - biography, methods and experience
+- `about.html` - research biography, methods, tools and education
 - `get-in-touch.html` - email/phone contact and enquiry form
 - `work-*.html` - four dedicated research case studies
 - `assets/Treasure-Alelume-CV.pdf` - downloadable CV
@@ -45,6 +45,7 @@ With Playwright available to Node, run the browser tests against the local serve
 
 ```bash
 node tests/work-filters.cjs
+node tests/about-page.cjs
 ```
 
 The default test URL is `http://127.0.0.1:8003/research.html`; set `PORTFOLIO_TEST_URL`
@@ -53,3 +54,5 @@ and can be set to `chrome`. The tests cover desktop, tablet, 390px mobile, keybo
 controls, CSS support, left-aligned titles, original order, reload defaults, and JavaScript-off/load-failure
 fallbacks. Article fixtures are injected only into isolated browser responses and are
 never written to the portfolio. Screenshots are saved in the system temporary directory.
+The About-page checks confirm the research-focused content, education and CV link,
+and the removal of commercial internships without leaving an empty section.
