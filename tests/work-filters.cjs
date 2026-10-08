@@ -62,6 +62,8 @@ async function expectSelection(page,type,subtype,count){
       }));
       assert.equal(layout.overflow,false,`No page overflow at ${width}px`);
       assert.ok(layout.cssRules>0,'Stylesheet parses and loads');
+      const capitalization=await page.locator('[data-work-filters] button').evaluateAll(buttons=>buttons.map(button=>getComputedStyle(button).textTransform));
+      assert.ok(capitalization.every(value=>value==='uppercase'),'All category labels display in capitals');
       const cssErrors=await page.evaluate(()=>{
         const errors=[];
         function check(rules){
@@ -111,6 +113,23 @@ async function expectSelection(page,type,subtype,count){
     }
     assert.deepEqual(errors,[],'No JavaScript errors');
     await page.close();
+
+    const home=await browser.newPage();
+    for(const width of [1440,820,390]){
+      await home.setViewportSize({width,height:900});
+      await home.goto(new URL('index.html',url).href);
+      assert.equal(await home.locator('.home-facts-band').count(),0,'Home professional-details strip removed');
+      const spacing=await home.locator('.home-hero').evaluate(hero=>({
+        nextSection:hero.nextElementSibling.classList.contains('research-note'),
+        gap:hero.nextElementSibling.getBoundingClientRect().top-hero.getBoundingClientRect().bottom,
+        overflow:document.documentElement.scrollWidth>window.innerWidth,
+      }));
+      assert.equal(spacing.nextSection,true);
+      assert.ok(Math.abs(spacing.gap)<1,'Next section directly follows home hero');
+      assert.equal(spacing.overflow,false);
+    }
+    await home.close();
+    console.log('PASS home page: details strip removed, next section flush, no overflow at all three widths');
 
     const noJS=await browser.newContext({javaScriptEnabled:false,viewport:{width:390,height:900}});
     const fallback=await noJS.newPage();
