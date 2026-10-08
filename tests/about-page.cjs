@@ -18,6 +18,8 @@ const url=new URL('about.html',process.env.PORTFOLIO_TEST_URL||'http://127.0.0.1
       assert.equal(await page.locator('#methods .detail-list h3').count(),4);
       assert.equal(await page.getByRole('heading',{name:'Research communication',exact:true}).count(),1);
       assert.equal(await page.getByRole('heading',{name:'Research tools',exact:true}).count(),1);
+      assert.match(text,/Microsoft Office \(Excel, Word, PowerPoint\)/);
+      assert.match(text,/Google Workspace \(Docs, Sheets, Slides\)/);
       assert.equal(await page.getByRole('heading',{name:'B.Sc. Economics',exact:true}).count(),1);
       assert.equal(await page.getByRole('link',{name:'Download CV',exact:true}).getAttribute('href'),'assets/Treasure-Alelume-CV.pdf');
       const layout=await page.locator('#methods').evaluate(methods=>({
