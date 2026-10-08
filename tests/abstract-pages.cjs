@@ -27,7 +27,7 @@ const works=[
         assert.equal(await page.locator('.work-contribution').count(),collaboration?1:0);
         if(collaboration){
           assert.equal(await page.locator('#contribution-heading').textContent(),'My contribution');
-          assert.equal(await page.locator('.work-contribution p').textContent(),'Literature review and econometric analysis.');
+          assert.equal(await page.locator('.work-contribution p').textContent(),'Literature review, methodology and econometric analysis.');
           assert.equal(await page.locator('.work-contribution').isVisible(),true);
         }
         assert.equal(await page.locator('.abstract-meta').textContent(),work.type);

@@ -21,7 +21,7 @@ statistics, contents navigation or separate analysis sections. Existing page URL
 old section fragments still resolve; their invisible anchors now lead to the abstract.
 
 The three research collaborations include the user-confirmed contribution:
-"Literature review and econometric analysis." Personal research does not show this section.
+"Literature review, methodology and econometric analysis." Personal research does not show this section.
 
 The current abstracts are portfolio summaries drafted from the previous case-study
 content, not verbatim manuscript abstracts. Preserve methodological caveats when
