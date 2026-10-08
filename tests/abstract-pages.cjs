@@ -21,8 +21,15 @@ const works=[
         await page.setViewportSize({width,height:900});
         await page.goto(new URL(work.file,base).href,{waitUntil:'domcontentloaded'});
         assert.equal(await page.locator('h1').count(),1);
-        assert.equal(await page.locator('h2').count(),1);
-        assert.equal(await page.locator('h2').textContent(),'Abstract');
+        const collaboration=work.type==='Research collaboration';
+        assert.equal(await page.locator('h2').count(),collaboration?2:1);
+        assert.equal(await page.locator('#abstract-heading').textContent(),'Abstract');
+        assert.equal(await page.locator('.work-contribution').count(),collaboration?1:0);
+        if(collaboration){
+          assert.equal(await page.locator('#contribution-heading').textContent(),'My contribution');
+          assert.equal(await page.locator('.work-contribution p').textContent(),'Literature review and econometric analysis.');
+          assert.equal(await page.locator('.work-contribution').isVisible(),true);
+        }
         assert.equal(await page.locator('.abstract-meta').textContent(),work.type);
         assert.equal(await page.locator('.abstract-meta').isVisible(),true);
         assert.equal(await page.locator('.case-toc,.study-strip,.status-stamp,.article-layout,.prose,.page-intro').count(),0,'Detailed case-study sections removed');
@@ -33,7 +40,7 @@ const works=[
         assert.match(text,/ARDL/);
         assert.ok(text.split(/\s+/).length>=100&&text.split(/\s+/).length<=250,'Concise research abstract');
         assert.equal(await page.locator('.abstract-status').textContent(),'Unpublished research · Not peer reviewed');
-        assert.doesNotMatch(await page.locator('main').textContent(),/My contribution|coming soon|placeholder/i,'No invented role or placeholder sections');
+        assert.doesNotMatch(await page.locator('main').textContent(),/coming soon|placeholder|sole author|wrote all/i,'No placeholder or unrequested authorship claims');
         assert.equal(await page.locator('.back-link').getAttribute('href'),'research.html');
         assert.equal(await page.locator('.next-study a').getAttribute('href'),work.next);
         const geometry=await page.locator('.abstract-copy').evaluate(copy=>({
@@ -73,6 +80,7 @@ const works=[
       await fallback.goto(new URL(work.file,base).href,{waitUntil:'domcontentloaded'});
       assert.equal(await fallback.locator('.abstract-copy').isVisible(),true);
       assert.equal(await fallback.locator('.abstract-copy>p:not(.abstract-status)').count(),2);
+      assert.equal(await fallback.locator('.work-contribution').count(),work.type==='Research collaboration'?1:0);
       await fallback.close();
     }
     await noJs.close();

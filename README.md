@@ -20,6 +20,9 @@ followed by links back to Work and onward to the next piece. There are no case-s
 statistics, contents navigation or separate analysis sections. Existing page URLs and
 old section fragments still resolve; their invisible anchors now lead to the abstract.
 
+The three research collaborations include the user-confirmed contribution:
+"Literature review and econometric analysis." Personal research does not show this section.
+
 The current abstracts are portfolio summaries drafted from the previous case-study
 content, not verbatim manuscript abstracts. Preserve methodological caveats when
 editing them, including the conflicting result descriptions in the SME-loans manuscript.
