@@ -11,12 +11,57 @@ function initMenu(){
 function initContactForm(){
   const form=document.querySelector('[data-contact-form]');
   if(!form)return;
-  form.addEventListener('submit',event=>{
+  const button=form.querySelector('[type="submit"]');
+  const status=form.querySelector('[data-form-status]');
+  let sending=false;
+  form.addEventListener('submit',async event=>{
     event.preventDefault();
+    if(sending)return;
+    for(const field of form.querySelectorAll('[required]')){
+      field.setCustomValidity(field.value.trim()?'':'Please complete this field.');
+      field.addEventListener('input',()=>field.setCustomValidity(''),{once:true});
+    }
+    if(!form.reportValidity())return;
     const data=new FormData(form);
-    const subject=data.get('projectType')||'Research enquiry';
-    const body=`Name: ${data.get('name')||''}\nEmail: ${data.get('email')||''}\n\n${data.get('message')||''}`;
-    location.href=`mailto:talelume@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    if(data.get('_honey'))return;
+    for(const key of ['name','email','message'])data.set(key,String(data.get(key)||'').trim());
+    data.set('_subject',`Portfolio enquiry: ${data.get('projectType')}`);
+    sending=true;
+    button.disabled=true;
+    button.textContent='Sending…';
+    form.setAttribute('aria-busy','true');
+    status.dataset.state='pending';
+    status.textContent='Sending your enquiry…';
+    const controller=new AbortController();
+    const timeout=setTimeout(()=>controller.abort(),20000);
+    try{
+      const response=await fetch(form.dataset.submitUrl,{
+        method:'POST',body:data,headers:{Accept:'application/json'},signal:controller.signal,
+      });
+      const result=await response.json();
+      if(!response.ok)throw new Error('Submission rejected');
+      // An activation response is not confirmation that an enquiry was emailed.
+      if(/activat|confirm.*email|verify.*email/i.test(result.message||'')){
+        status.dataset.state='error';
+        status.textContent='Email delivery is awaiting activation. Your enquiry has not been confirmed sent. Please contact Treasure directly using the details beside this form.';
+        return;
+      }
+      if(!(result.success===true||result.success==='true'))throw new Error('Submission rejected');
+      status.dataset.state='success';
+      status.textContent='Your enquiry has been submitted. Thank you—I will reply by email.';
+      form.reset();
+    }catch(error){
+      status.dataset.state='error';
+      status.textContent=error.name==='AbortError'
+        ?'Delivery could not be confirmed in time. Your details are still here. Please contact Treasure directly before resending to avoid a duplicate.'
+        :'Your enquiry could not be submitted. Your details are still here—please try again or contact Treasure directly.';
+    }finally{
+      clearTimeout(timeout);
+      sending=false;
+      button.disabled=false;
+      button.textContent='Send enquiry';
+      form.removeAttribute('aria-busy');
+    }
   });
 }
 

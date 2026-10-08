@@ -97,6 +97,13 @@ h1{font-size:clamp(2.8rem,4.4vw,4.75rem);max-width:820px}
 .practice-layout h2,.about-grid h2{margin-top:0}
 .contact-layout{grid-template-columns:minmax(0,1fr) auto}
 .contact-layout a{justify-self:start;max-width:100%}
+.form-honeypot{display:none}
+.form-status{font-size:14px;margin:16px 0 0;line-height:1.5}
+.form-status:empty{display:none}
+.form-status[data-state="error"]{color:#a93822}
+.form-status[data-state="success"]{color:#245b3b}
+.form-note a{text-decoration:underline;text-underline-offset:3px}
+.enquiry-form .button:disabled{opacity:.65;cursor:wait}
 .page-hero{padding:82px 0 68px}
 .page-hero-layout{grid-template-columns:1fr}
 .page-hero h1,.page-hero .page-intro{grid-column:1}

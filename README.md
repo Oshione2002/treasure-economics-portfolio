@@ -39,7 +39,26 @@ categories stay hidden. Do not add placeholder cards just to expose a category.
 Filters reset to Research / All Research on reload (or the first populated type if
 there is no research). Without JavaScript, controls stay hidden and all cards remain visible.
 
-## Filter checks
+## Contact delivery
+
+The enquiry form posts to FormSubmit's AJAX endpoint for `talelume@gmail.com`.
+It stays on the contact page with JavaScript enabled, validates required fields,
+prevents concurrent submissions and preserves details on errors. No API key is
+embedded in the site. Without JavaScript, a normal POST uses FormSubmit's hosted
+confirmation page rather than opening an email application.
+
+The mailbox owner must click FormSubmit's one-time activation email before
+delivery is enabled (check spam too). Trigger activation with one clearly labelled
+test from the production contact page, then confirm a follow-up arrives in the inbox.
+An accepted HTTP response does not establish inbox delivery. Do not repeatedly send
+activation tests. The provider handles email delivery and spam checks; a honeypot
+is also included. There is no automatic retry or visitor autoresponder.
+
+The form discloses third-party processing and links the provider privacy policy.
+FormSubmit documents a 30-day submission archive. Do not send confidential research
+data through this form. No submissions are stored in this repository.
+
+## Browser checks
 
 With Playwright available to Node, run the browser tests against the local server:
 
@@ -58,3 +77,5 @@ never written to the portfolio. Screenshots are saved in the system temporary di
 The About-page checks confirm the research-focused content, education and CV link,
 and the removal of commercial internships without leaving an empty section.
 Contact checks cover text-width email/phone underlines and research-focused form options.
+They also mock delivery responses to test validation, success, activation, failures,
+timeouts and duplicate prevention without sending real email.
