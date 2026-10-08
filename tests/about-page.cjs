@@ -13,6 +13,11 @@ const url=new URL('about.html',process.env.PORTFOLIO_TEST_URL||'http://127.0.0.1
       await page.setViewportSize({width,height:900});
       await page.goto(url,{waitUntil:'domcontentloaded'});
       const text=await page.locator('main').innerText();
+      const intro=await page.locator('.about-hero .page-intro').innerText();
+      assert.doesNotMatch(intro,/based in|Ibadan|interest|macroeconomic|development questions|public finance|monetary policy|human development/i);
+      assert.match(intro,/research design, empirical analysis and clear interpretation/);
+      assert.match(intro,/policy and strategic decisions/);
+      assert.doesNotMatch(await page.locator('meta[name="description"]').getAttribute('content'),/based in|Ibadan/i);
       assert.doesNotMatch(text,/remote|intern|commercial|funding societies|elegant hoopoe|friendsurance|customer|sales|dashboard|power bi|tableau/i);
       assert.equal(await page.locator('.experience-section').count(),0);
       assert.equal(await page.locator('#methods .detail-list h3').count(),4);

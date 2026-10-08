@@ -55,6 +55,10 @@ async function expectSelection(page,type,subtype,count){
     for(const width of [1440,820,390]){
       await page.setViewportSize({width,height:900});
       await page.goto(url);
+      const intro=await page.locator('.work-hero .page-intro').innerText();
+      assert.match(intro,/Economic research and writing/);
+      assert.match(intro,/policy and strategic decisions/);
+      assert.doesNotMatch(intro,/four studies|human development|regional integration|monetary policy|public debt/i,'Work introduction is not limited to the existing projects');
       await expectSelection(page,'research','all',4);
       assert.equal(await page.locator(`${primary}[data-filter-type="article"]`).isVisible(),false);
       assert.equal(await page.locator('.work-card-id').count(),0,'No project numbers or side labels');
