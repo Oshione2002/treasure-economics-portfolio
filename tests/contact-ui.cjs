@@ -30,13 +30,15 @@ const base=process.env.PORTFOLIO_TEST_URL||'http://127.0.0.1:8003/';
         assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>window.innerWidth),false);
       }
       await page.goto(new URL('get-in-touch.html',base).href,{waitUntil:'domcontentloaded'});
+      assert.equal(await page.locator('a[href="https://formsubmit.co/privacy.pdf"]').count(),0);
+      assert.ok(!(await page.locator('[data-contact-form]').textContent()).includes('Submitting shares'));
       const options=await page.locator('select[name="projectType"] option').allTextContents();
-      assert.deepEqual(options,['Full research collaboration','Econometric analysis','Literature review and research design','Data analysis','Other enquiry']);
+      assert.deepEqual(options,['Full research collaboration','Econometric analysis','Literature review and research design','Other enquiry']);
       assert.ok(options.every(option=>!/dashboard/i.test(option)));
-      await page.locator('select[name="projectType"]').selectOption({label:'Data analysis'});
-      assert.equal(await page.locator('select[name="projectType"]').inputValue(),'Data analysis');
+      await page.locator('select[name="projectType"]').selectOption({label:'Econometric analysis'});
+      assert.equal(await page.locator('select[name="projectType"]').inputValue(),'Econometric analysis');
       assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>window.innerWidth),false);
-      console.log(`PASS ${width}px: contact underlines match text; dashboard removed; Data analysis option works; no overflow`);
+      console.log(`PASS ${width}px: contact underlines match text; privacy note and Data analysis removed; remaining options work; no overflow`);
     }
     const form=page.locator('[data-contact-form]');
     const status=page.locator('[data-form-status]');
@@ -48,7 +50,7 @@ const base=process.env.PORTFOLIO_TEST_URL||'http://127.0.0.1:8003/';
     await page.route(endpoint,async route=>{
       requests++;
       const body=route.request().postData();
-      assert.ok(body.includes('Portfolio enquiry: Data analysis'));
+      assert.ok(body.includes('Portfolio enquiry: Econometric analysis'));
       assert.ok(body.includes('Research test details'));
       if(mode==='pending')await new Promise(resolve=>{release=resolve;});
       if(mode==='network')return route.abort();
@@ -62,7 +64,7 @@ const base=process.env.PORTFOLIO_TEST_URL||'http://127.0.0.1:8003/';
       await form.locator('[name="name"]').fill('Portfolio test');
       await form.locator('[name="email"]').fill('visitor@example.com');
       await form.locator('[name="message"]').fill('Research test details');
-      await form.locator('[name="projectType"]').selectOption('Data analysis');
+      await form.locator('[name="projectType"]').selectOption('Econometric analysis');
     };
     await button.click();
     assert.equal(requests,0,'Empty fields do not submit');

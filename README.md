@@ -54,7 +54,6 @@ An accepted HTTP response does not establish inbox delivery. Do not repeatedly s
 activation tests. The provider handles email delivery and spam checks; a honeypot
 is also included. There is no automatic retry or visitor autoresponder.
 
-The form discloses third-party processing and links the provider privacy policy.
 FormSubmit documents a 30-day submission archive. Do not send confidential research
 data through this form. No submissions are stored in this repository.
 
