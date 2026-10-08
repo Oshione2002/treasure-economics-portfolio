@@ -67,6 +67,7 @@ With Playwright available to Node, run the browser tests against the local serve
 node tests/work-filters.cjs
 node tests/about-page.cjs
 node tests/contact-ui.cjs
+node tests/case-contents.cjs
 ```
 
 The default test URL is `http://127.0.0.1:8003/research.html`; set `PORTFOLIO_TEST_URL`
@@ -80,3 +81,7 @@ and the removal of commercial internships without leaving an empty section.
 Contact checks cover text-width email/phone underlines and research-focused form options.
 They also mock delivery responses to test validation, success, activation, failures,
 timeouts and duplicate prevention without sending real email.
+Case-study checks cover sticky contents links below the main header, unobscured anchor
+headings, keyboard navigation, mobile-menu stacking and release before the footer.
+The horizontal contents bar stays sticky below 980px and wraps its links; JavaScript
+measures its height to keep section jumps clear. Sticky positioning also works without JavaScript.
