@@ -20,3 +20,36 @@ python -m http.server 8001
 ```
 
 Open `http://localhost:8001`.
+
+## Work categories
+
+Work-page filters discover categories from `.work-card` entries inside `#work-results`.
+Each card declares `data-work-type` and `data-work-subtype`:
+
+| Type | Subtypes |
+| --- | --- |
+| `research` | `thesis`, `collaboration` |
+| `article` | `published`, `unpublished` |
+
+Keep the existing card structure and original displayed number when adding work. For example,
+a future article card starts with `<article class="work-card" data-work-type="article" data-work-subtype="published">`.
+The first article automatically reveals Articles and its populated status filters; empty
+categories stay hidden. Do not add placeholder cards just to expose a category.
+
+Filters reset to Research / All Research on reload (or the first populated type if
+there is no research). Without JavaScript, controls stay hidden and all cards remain visible.
+
+## Filter checks
+
+With Playwright available to Node, run the browser tests against the local server:
+
+```bash
+node tests/work-filters.cjs
+```
+
+The default test URL is `http://127.0.0.1:8003/research.html`; set `PORTFOLIO_TEST_URL`
+to use another local port or the deployed page. `PORTFOLIO_BROWSER` defaults to `msedge`
+and can be set to `chrome`. The tests cover desktop, tablet, 390px mobile, keyboard
+controls, CSS support, original numbering, reload defaults, and JavaScript-off/load-failure
+fallbacks. Article fixtures are injected only into isolated browser responses and are
+never written to the portfolio. Screenshots are saved in the system temporary directory.
