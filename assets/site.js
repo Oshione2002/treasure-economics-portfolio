@@ -115,8 +115,17 @@ function initWorkFilters(){
     });
   });
   select(activeType,'all');
+  const filterBar=controls.closest('.work-filter-bar');
+  const header=document.querySelector('.site-header');
+  if(filterBar&&header){
+    const updateHeaderOffset=()=>filterBar.style.setProperty('--work-header-height',`${header.getBoundingClientRect().height}px`);
+    updateHeaderOffset();
+    if('ResizeObserver' in window)new ResizeObserver(updateHeaderOffset).observe(header);
+    else window.addEventListener('resize',updateHeaderOffset);
+  }
   // Reveal controls only once filtering and event handlers are ready.
   controls.hidden=false;
+  if(filterBar)filterBar.hidden=false;
 }
 
 document.addEventListener('DOMContentLoaded',()=>{

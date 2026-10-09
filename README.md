@@ -19,6 +19,8 @@ Each work page uses a shared title/type header and a single, readable abstract s
 followed by links back to Work and onward to the next piece. There are no case-study
 statistics, contents navigation or separate analysis sections. Existing page URLs and
 old section fragments still resolve; their invisible anchors now lead to the abstract.
+The back link reads "Back to All Research" and returns to the complete Research list.
+The monetary-policy abstract is displayed as one continuous paragraph.
 
 The three research collaborations include the user-confirmed contribution:
 "Literature review, methodology and econometric analysis." Personal research does not show this section.
@@ -61,6 +63,8 @@ categories stay hidden. Do not add placeholder cards just to expose a category.
 
 Filters reset to Research / All Research on reload (or the first populated type if
 there is no research). Without JavaScript, controls stay hidden and all cards remain visible.
+The full-width filter bar sticks below the site navigation while scrolling through
+the work list, with its offset following the header height at each viewport size.
 
 ## Contact delivery
 

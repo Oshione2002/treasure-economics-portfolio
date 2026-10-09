@@ -46,13 +46,37 @@ async function expectSelection(page,type,subtype,count){
   assert.equal(divider.overflow,false);
 }
 
+async function expectStickyFilters(page){
+  const scrollTarget=await page.locator('.work-filter-bar').evaluate(bar=>bar.getBoundingClientRect().top+scrollY-document.querySelector('.site-header').getBoundingClientRect().height+160);
+  await page.evaluate(top=>window.scrollTo({top,behavior:'instant'}),scrollTarget);
+  await page.waitForFunction(()=>{
+    const bar=document.querySelector('.work-filter-bar').getBoundingClientRect();
+    return Math.abs(bar.top-document.querySelector('.site-header').getBoundingClientRect().bottom)<1;
+  });
+  const geometry=await page.locator('.work-filter-bar').evaluate(bar=>{
+    const bounds=bar.getBoundingClientRect();
+    const button=bar.querySelector('[data-filter-group="research"] [data-filter-subtype="collaboration"]');
+    const target=button.getBoundingClientRect();
+    return {
+      position:getComputedStyle(bar).position,
+      background:getComputedStyle(bar).backgroundColor,
+      left:bounds.left,right:bounds.right,viewport:innerWidth,
+      clickable:button.contains(document.elementFromPoint(target.left+target.width/2,target.top+target.height/2)),
+    };
+  });
+  assert.equal(geometry.position,'sticky');
+  assert.notEqual(geometry.background,'rgba(0, 0, 0, 0)');
+  assert.ok(Math.abs(geometry.left)<1&&Math.abs(geometry.right-geometry.viewport)<1,'Sticky bar spans the page');
+  assert.equal(geometry.clickable,true,'Scrolled controls remain clickable below navigation');
+}
+
 (async()=>{
   const browser=await chromium.launch({channel:process.env.PORTFOLIO_BROWSER||'msedge',headless:true});
   try{
     const page=await browser.newPage();
     const errors=[];
     page.on('pageerror',error=>errors.push(error.message));
-    for(const width of [1440,820,390]){
+    for(const width of [1440,820,390,320]){
       await page.setViewportSize({width,height:900});
       await page.goto(url);
       const intro=await page.locator('.work-hero .page-intro').innerText();
@@ -125,7 +149,17 @@ async function expectSelection(page,type,subtype,count){
       await collaborations.click();
       await page.reload();
       await expectSelection(page,'research','all',4);
-      await page.locator('[data-work-filters]').scrollIntoViewIfNeeded();
+      await expectStickyFilters(page);
+      await collaborations.click();
+      await expectSelection(page,'research','collaboration',3);
+      await page.getByRole('button',{name:'All Research',exact:true}).click();
+      await expectSelection(page,'research','all',4);
+      if(width<=760){
+        await page.getByRole('button',{name:'Toggle navigation'}).click();
+        assert.equal(await page.getByRole('link',{name:'About',exact:true}).isVisible(),true);
+        await page.getByRole('button',{name:'Toggle navigation'}).click();
+      }
+      await expectStickyFilters(page);
       await page.screenshot({path:path.join(os.tmpdir(),`portfolio-work-filters-${width}.png`)});
       console.log(`PASS ${width}px: no side labels/numbers, left-aligned titles, counts 4/1/3, preserved order, keyboard/focus, reload, tap targets, no overflow`);
     }
@@ -154,6 +188,7 @@ async function expectSelection(page,type,subtype,count){
     await fallback.goto(url);
     assert.equal(await fallback.locator(visibleCards).count(),4);
     assert.equal(await fallback.locator('[data-work-filters]').isVisible(),false);
+    assert.equal(await fallback.locator('.work-filter-bar').isVisible(),false);
     await noJS.close();
     console.log('PASS JavaScript disabled: all four cards visible, controls hidden');
     const failedScript=await browser.newPage();
@@ -161,6 +196,7 @@ async function expectSelection(page,type,subtype,count){
     await failedScript.goto(url);
     assert.equal(await failedScript.locator(visibleCards).count(),4);
     assert.equal(await failedScript.locator('[data-work-filters]').isVisible(),false);
+    assert.equal(await failedScript.locator('.work-filter-bar').isVisible(),false);
     await failedScript.close();
     console.log('PASS script load failure: all four cards visible, controls hidden');
 

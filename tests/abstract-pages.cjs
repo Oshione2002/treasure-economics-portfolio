@@ -6,7 +6,7 @@ const base=process.env.PORTFOLIO_TEST_URL||'http://127.0.0.1:8003/';
 const works=[
   {file:'work-government-spending-human-capital.html',type:'Personal research · Undergraduate thesis',period:'1990–2022',next:'work-ecowas-free-movement.html'},
   {file:'work-ecowas-free-movement.html',type:'Research collaboration',period:'1981–2024',next:'work-monetary-policy-sme-loans.html'},
-  {file:'work-monetary-policy-sme-loans.html',type:'Research collaboration',period:'1992–2023',next:'work-public-debt-composition.html'},
+  {file:'work-monetary-policy-sme-loans.html',type:'Research collaboration',period:'1992–2023',next:'work-public-debt-composition.html',paragraphs:1},
   {file:'work-public-debt-composition.html',type:'Research collaboration',period:'1981–2023',next:'research.html'},
 ];
 
@@ -34,7 +34,7 @@ const works=[
         assert.equal(await page.locator('.abstract-meta').isVisible(),true);
         assert.equal(await page.locator('.case-toc,.study-strip,.status-stamp,.article-layout,.prose,.page-intro').count(),0,'Detailed case-study sections removed');
         const paragraphs=await page.locator('.abstract-copy>p:not(.abstract-status)').allTextContents();
-        assert.equal(paragraphs.length,2);
+        assert.equal(paragraphs.length,work.paragraphs||2);
         const text=paragraphs.join(' ');
         assert.ok(text.includes(work.period));
         assert.match(text,/ARDL/);
@@ -43,6 +43,8 @@ const works=[
         assert.doesNotMatch(await page.locator('main').textContent(),/Unpublished research|Not peer reviewed/);
         assert.doesNotMatch(await page.locator('main').textContent(),/coming soon|placeholder|sole author|wrote all/i,'No placeholder or unrequested authorship claims');
         assert.equal(await page.locator('.back-link').getAttribute('href'),'research.html');
+        assert.equal(await page.locator('.back-link').textContent(),'Back to All Research');
+        assert.equal(await page.locator('.site-footer span').nth(1).textContent(),'Economics research & analysis');
         assert.equal(await page.locator('.next-study a').getAttribute('href'),work.next);
         const geometry=await page.locator('.abstract-copy').evaluate(copy=>({
           overflow:document.documentElement.scrollWidth>innerWidth,
@@ -75,12 +77,25 @@ const works=[
     assert.equal(await page.locator('.project-link').first().textContent(),'Read the abstract');
     await page.goto(new URL('research.html',base).href,{waitUntil:'domcontentloaded'});
     assert.match(await page.locator('.research-note').textContent(),/Each abstract summarises/);
+    for(const file of ['index.html','research.html','about.html']){
+      for(const width of [1440,390,320]){
+        await page.setViewportSize({width,height:900});
+        await page.goto(new URL(file,base).href,{waitUntil:'domcontentloaded'});
+        assert.equal(await page.locator('.site-footer span').nth(1).textContent(),'Economics research & analysis');
+        assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
+      }
+    }
+    await page.goto(new URL(works[2].file,base).href,{waitUntil:'domcontentloaded'});
+    await page.locator('.back-link').click();
+    assert.equal(new URL(page.url()).pathname,'/research.html');
+    assert.equal(await page.locator('[data-filter-group="research"] [data-filter-subtype="all"]').getAttribute('aria-pressed'),'true');
+    assert.equal(await page.locator('[data-work-type="research"]:visible').count(),4);
     const noJs=await browser.newContext({javaScriptEnabled:false,viewport:{width:390,height:900}});
     for(const work of works){
       const fallback=await noJs.newPage();
       await fallback.goto(new URL(work.file,base).href,{waitUntil:'domcontentloaded'});
       assert.equal(await fallback.locator('.abstract-copy').isVisible(),true);
-      assert.equal(await fallback.locator('.abstract-copy>p:not(.abstract-status)').count(),2);
+      assert.equal(await fallback.locator('.abstract-copy>p:not(.abstract-status)').count(),work.paragraphs||2);
       assert.equal(await fallback.locator('.work-contribution').count(),work.type==='Research collaboration'?1:0);
       await fallback.close();
     }
