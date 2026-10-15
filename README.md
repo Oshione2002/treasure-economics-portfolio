@@ -5,36 +5,36 @@ An editorial, evidence-led static portfolio built with plain HTML, CSS and JavaS
 ## Main pages
 
 - `index.html` - profile and featured work
-- `research.html` - selected research
+- `research.html` - selected research and articles
 - `about.html` - research biography, methods, tools and education
 - `get-in-touch.html` - email/phone contact and enquiry form
-- `work-*.html` - four research abstract pages
+- `work-*.html` - three Research abstract pages and one expanded Article page
 - `assets/Treasure-Alelume-CV.pdf` - downloadable CV
 
-The abstract pages distinguish Treasure's undergraduate thesis from research collaborations and do not claim that any work is peer reviewed or published. Full collaborative manuscripts are intentionally not distributed through the site.
+The work pages distinguish Treasure's undergraduate thesis, Research collaborations and collaborative Article and do not claim that any work is peer reviewed or published. Full collaborative manuscripts are intentionally not distributed through the site.
 
 ## Abstract pages
 
-Each work page uses a shared title/type header and a single, readable abstract section,
+The three Research pages use a shared title/type header and a single, readable abstract section,
 followed by links back to Work and onward to the next piece. There are no case-study
 statistics, contents navigation or separate analysis sections. Existing page URLs and
 old section fragments still resolve; their invisible anchors now lead to the abstract.
 The back link reads "Back to All Research" and returns to the complete Research list.
-The monetary-policy abstract is displayed as one continuous paragraph.
+The monetary-policy Article uses the expanded reading layout documented below.
 
-The three research collaborations include the user-confirmed contribution:
+The two Research collaborations and collaborative Article include the user-confirmed contribution:
 "Literature review, methodology and econometric analysis." Personal research does not show this section.
 
-The current abstracts are portfolio summaries drafted from the previous case-study
+The Research abstracts are portfolio summaries drafted from the previous case-study
 content, not verbatim manuscript abstracts. Preserve methodological caveats when
 editing them, including the conflicting result descriptions in the SME-loans manuscript.
 Original abstracts can replace these summaries when supplied and checked.
 
-Future articles use the same `abstract-page`, `abstract-container`, `abstract-meta`
-and `abstract-copy` structure, with Article / Personal or Article / Collaboration
+Future articles use the `article-detail-page` structure documented below,
+with Article / Personal or Article / Collaboration
 as the type. Add contribution details only when Treasure confirms them; add publication
 details and links only when verified. Omit unavailable sections rather than placeholders.
-Do not create article entries until real content is supplied.
+Do not create additional article entries until real content is supplied.
 
 ## Local preview
 
@@ -57,12 +57,15 @@ Each card declares `data-work-type` and `data-work-subtype`:
 Keep the existing title-and-description card structure when adding work (no side numbers or labels). For example,
 a future personal article card starts with `<article class="work-card" data-work-type="article" data-work-subtype="personal">`.
 Both types display Personal and Collaborations filters. The existing thesis is Personal;
-the other three research entries are Collaborations. Publication status is not a filter.
+ECOWAS and public debt are Research / Collaborations; monetary policy is Article / Collaboration.
+Current counts are Research 3 (Personal 1, Collaborations 2) and Articles 1 (Collaborations 1).
+Publication status is not a filter.
 The first article automatically reveals Articles and its populated ownership filters; empty
 categories stay hidden. Do not add placeholder cards just to expose a category.
 
 Filters reset to Research / All Research on reload (or the first populated type if
-there is no research). Without JavaScript, controls stay hidden and all cards remain visible.
+there is no research). Explicit `?type=article` links select All Articles.
+Without JavaScript, controls stay hidden and all cards remain visible.
 The full-width filter bar sticks below the site navigation while scrolling through
 the work list, with its offset following the header height at each viewport size.
 
@@ -106,5 +109,29 @@ and the removal of commercial internships without leaving an empty section.
 Contact checks cover text-width email/phone underlines and research-focused form options.
 They also mock delivery responses to test validation, success, activation, failures,
 timeouts and duplicate prevention without sending real email.
-Abstract-page checks cover the shared layout, preserved research caveats, type labels,
+Article-page checks cover the reading layout, qualified findings, type labels,
 working navigation and old section fragments, mobile readability and JavaScript-off access.
+
+## Expanded article detail pages
+
+The monetary-policy article uses `article-detail-page`, with article-only styles in
+`assets/article-detail.css` and navigation in `assets/article-detail.js`. Keep the
+printed title and a single verbatim abstract from the user-approved source, followed
+by Background, What the article examines, Discussion and takeaways, Limitations,
+and the confirmed contribution for collaborative articles. Publication details and
+links are omitted unless verified; never distribute private manuscripts or review
+registers with the site. The current abstract follows the replacement supplied in
+the 14 October 2026 private reading edition, not the superseded original.
+
+Use a native `.article-contents` navigation linking to the existing section IDs.
+It sticks below the site header on desktop; below 900px an enhanced sticky section
+selector replaces it. The active link uses `aria-current="location"`; scrolling,
+anchor clicks and the selector keep the current section in sync. Header and mobile
+bar heights determine the sticky and bookmark offsets. Without JavaScript or when
+the script fails, readable sections and native contents links remain available.
+Preserve old question/design/evidence/quality/limits anchors as aliases to the
+appropriate sections. Article back links select `research.html?type=article`.
+
+Run `node tests/article-details.cjs` to verify five viewport sizes, desktop/mobile
+stickiness, scrolling and keyboard navigation, abstract fidelity, old bookmarks,
+resizing, category navigation, and JavaScript-off/script-failure fallbacks.

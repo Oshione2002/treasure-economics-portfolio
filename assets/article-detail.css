@@ -1,0 +1,51 @@
+/* Article-only reading layout. No global Research or abstract styles are changed. */
+.article-detail-page{--article-header-height:78px;--article-mobile-height:0px;--article-anchor-gap:calc(var(--article-header-height) + var(--article-mobile-height) + 22px)}
+.article-detail-shell{width:var(--shell);max-width:1060px;margin-inline:auto}
+.article-detail-heading{padding-left:228px}
+.article-detail-hero{padding:46px 0 36px;background:var(--paper);border-bottom:1px solid var(--rule)}
+.article-detail-hero .back-link{margin-bottom:28px}
+.article-detail-meta{margin:0 0 14px;color:#a93822;font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.article-detail-hero h1{max-width:none;font-size:clamp(2rem,3.6vw,3.2rem);line-height:1.08;overflow-wrap:break-word}
+.article-detail-section{padding:32px 0 46px}
+.article-detail-layout{display:grid;grid-template-columns:180px minmax(0,1fr);gap:48px;align-items:start}
+.article-contents{position:sticky;top:calc(var(--article-header-height) + 22px);align-self:start;border-top:1px solid var(--rule);padding-top:14px}
+.article-contents>p{margin:0 0 12px;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.article-contents>a{display:block;min-height:44px;padding:10px 0 10px 12px;border-left:2px solid transparent;font-size:14px;line-height:1.4;color:var(--muted)}
+.article-contents>a:hover{color:var(--signal)}
+.article-contents>a[aria-current="location"]{border-left-color:var(--signal);color:var(--ink)}
+.article-contents>a:focus-visible,.article-mobile-contents select:focus-visible{outline:2px solid var(--signal);outline-offset:3px}
+.article-detail-copy{min-width:0;font-family:Georgia,"Times New Roman",serif;color:#41423f;font-size:19px;line-height:1.7}
+.article-detail-copy>section{margin:0 0 32px;scroll-margin-top:var(--article-anchor-gap)}
+.article-detail-copy>section:last-child{margin-bottom:0}
+.article-detail-copy h2{font-size:1.9rem;line-height:1.15;color:var(--ink);margin:0 0 18px}
+.article-detail-copy p{margin:0 0 16px}
+.article-detail-copy p:last-child{margin-bottom:0}
+.article-anchor{display:block;height:0;scroll-margin-top:var(--article-anchor-gap)}
+.article-detail-copy .work-contribution{font-family:"Segoe UI",Arial,sans-serif;padding-top:24px;border-top:1px solid var(--rule)}
+.article-detail-copy .work-contribution h2{font-size:1.4rem}
+.article-detail-copy .work-contribution p{font-size:16px;line-height:1.55}
+.article-mobile-contents{display:none}
+.article-detail-page .next-study .article-detail-heading{display:block}
+.article-detail-page .next-study span{display:block;margin-bottom:8px}
+.article-detail-page .next-study a{font-size:clamp(1.4rem,2.4vw,2rem);line-height:1.2}
+@media(max-width:900px){
+  .article-detail-heading{padding-left:0;max-width:800px}
+  .article-detail-layout{display:block;max-width:800px}
+  .article-contents{position:static;margin:0 0 30px}
+  .article-contents>a{display:inline-block;margin-right:12px}
+  .article-nav-ready .article-contents{display:none}
+  .article-nav-ready .article-mobile-contents:not([hidden]){display:block;position:sticky;top:var(--article-header-height);z-index:30;background:var(--surface);border-bottom:1px solid var(--rule);padding:8px 0}
+  .article-mobile-contents .article-detail-shell{max-width:800px;display:flex;align-items:center;gap:12px}
+  .article-mobile-contents label{white-space:nowrap;font-size:12px;color:var(--muted)}
+  .article-mobile-contents select{min-width:0;width:100%;min-height:44px;padding:8px;background:var(--surface);color:var(--ink);border:1px solid var(--rule);border-radius:0;font-size:16px}
+}
+@media(max-width:760px){
+  .article-detail-page{--article-header-height:68px}
+  .article-detail-hero{padding:32px 0 28px}
+  .article-detail-section{padding:26px 0 36px}
+  .article-detail-copy{font-size:17px;line-height:1.65}
+  .article-detail-copy h2{font-size:1.6rem}
+  .article-detail-copy>section{margin-bottom:28px}
+}
+/* This stylesheet is loaded only by Article detail pages. */
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}

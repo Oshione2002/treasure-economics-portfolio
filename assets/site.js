@@ -84,7 +84,9 @@ function initWorkFilters(){
       button.hidden=!matching.some(card=>button.dataset.filterSubtype==='all'||card.dataset.workSubtype===button.dataset.filterSubtype);
     });
   });
-  const initialType=types.find(button=>!button.hidden);
+  // Explicit category links (for example an article's back link) take precedence.
+  const requestedType=new URLSearchParams(window.location.search).get('type');
+  const initialType=types.find(button=>!button.hidden&&button.dataset.filterType===requestedType)||types.find(button=>!button.hidden);
   if(!initialType)return;
   let activeType=initialType.dataset.filterType;
 

@@ -17,6 +17,7 @@ async function withFixtures(page,subtypes,{removeResearch=false,removePersonal=f
   await page.route('**/research.html*',async route=>{
     const response=await route.fetch();
     let html=await response.text();
+    html=html.replace(/<article class="work-card[^>]*data-work-type="article"[\s\S]*?<\/article>/g,'');
     if(removeResearch)html=html.replace(/<article class="work-card[^>]*data-work-type="research"[\s\S]*?<\/article>/g,'');
     else if(removePersonal)html=html.replace(/<article class="work-card[^>]*data-work-subtype="personal"[\s\S]*?<\/article>/,'');
     const articles=subtypes.map(fixture).join('');
@@ -83,12 +84,12 @@ async function expectStickyFilters(page){
       assert.match(intro,/Economic research and writing/);
       assert.match(intro,/policy and strategic decisions/);
       assert.doesNotMatch(intro,/four studies|human development|regional integration|monetary policy|public debt/i,'Work introduction is not limited to the existing projects');
-      await expectSelection(page,'research','all',4);
+      await expectSelection(page,'research','all',3);
       assert.deepEqual(await page.locator('[data-filter-group="research"] button').allTextContents(),['All Research','Personal','Collaborations']);
       assert.deepEqual(await page.locator('[data-filter-group="article"] button').allTextContents(),['All Articles','Personal','Collaborations']);
-      assert.equal(await page.locator(`${primary}[data-filter-type="article"]`).isVisible(),false);
+      assert.equal(await page.locator(`${primary}[data-filter-type="article"]`).isVisible(),true);
       assert.equal(await page.locator('.work-card-id').count(),0,'No project numbers or side labels');
-      const alignment=await page.locator('.work-card').evaluateAll(cards=>cards.map(card=>({
+      const alignment=await page.locator(visibleCards).evaluateAll(cards=>cards.map(card=>({
         left:card.querySelector('.work-card-main').getBoundingClientRect().left,
         expected:card.closest('.shell').getBoundingClientRect().left,
       })));
@@ -139,21 +140,28 @@ async function expectStickyFilters(page){
       const collaborations=page.getByRole('button',{name:'Collaborations',exact:true});
       assert.equal(await collaborations.evaluate(button=>button===document.activeElement),true);
       await collaborations.press('Space');
-      await expectSelection(page,'research','collaboration',3);
-      assert.deepEqual(await page.locator(`${visibleCards} h2 a`).evaluateAll(links=>links.map(link=>link.getAttribute('href'))),['work-ecowas-free-movement.html','work-monetary-policy-sme-loans.html','work-public-debt-composition.html']);
+      await expectSelection(page,'research','collaboration',2);
+      assert.deepEqual(await page.locator(`${visibleCards} h2 a`).evaluateAll(links=>links.map(link=>link.getAttribute('href'))),['work-ecowas-free-movement.html','work-public-debt-composition.html']);
       await page.getByRole('button',{name:'All Research',exact:true}).click();
-      await expectSelection(page,'research','all',4);
+      await expectSelection(page,'research','all',3);
+      await page.getByRole('button',{name:'Articles',exact:true}).click();
+      await expectSelection(page,'article','all',1);
+      assert.equal(await page.locator('[data-filter-group="article"] [data-filter-subtype="personal"]').isVisible(),false);
+      await page.getByRole('button',{name:'Collaborations',exact:true}).click();
+      await expectSelection(page,'article','collaboration',1);
+      assert.equal(await page.locator(visibleCards+' h2 a').getAttribute('href'),'work-monetary-policy-sme-loans.html');
+      await page.getByRole('button',{name:'Research',exact:true}).click();
       await personal.click();
       await page.getByRole('button',{name:'Research',exact:true}).click();
-      await expectSelection(page,'research','all',4);
+      await expectSelection(page,'research','all',3);
       await collaborations.click();
       await page.reload();
-      await expectSelection(page,'research','all',4);
+      await expectSelection(page,'research','all',3);
       await expectStickyFilters(page);
       await collaborations.click();
-      await expectSelection(page,'research','collaboration',3);
+      await expectSelection(page,'research','collaboration',2);
       await page.getByRole('button',{name:'All Research',exact:true}).click();
-      await expectSelection(page,'research','all',4);
+      await expectSelection(page,'research','all',3);
       if(width<=760){
         await page.getByRole('button',{name:'Toggle navigation'}).click();
         assert.equal(await page.getByRole('link',{name:'About',exact:true}).isVisible(),true);
@@ -161,7 +169,7 @@ async function expectStickyFilters(page){
       }
       await expectStickyFilters(page);
       await page.screenshot({path:path.join(os.tmpdir(),`portfolio-work-filters-${width}.png`)});
-      console.log(`PASS ${width}px: no side labels/numbers, left-aligned titles, counts 4/1/3, preserved order, keyboard/focus, reload, tap targets, no overflow`);
+      console.log(`PASS ${width}px: no side labels/numbers, left-aligned titles, research counts 3/1/2, preserved order, keyboard/focus, reload, tap targets, no overflow`);
     }
     assert.deepEqual(errors,[],'No JavaScript errors');
     await page.close();
@@ -204,7 +212,7 @@ async function expectStickyFilters(page){
       const articles=await browser.newPage({viewport:{width:390,height:900}});
       await withFixtures(articles,subtypes);
       await articles.goto(url);
-      await expectSelection(articles,'research','all',4);
+      await expectSelection(articles,'research','all',3);
       await articles.getByRole('button',{name:'Articles',exact:true}).click();
       await expectSelection(articles,'article','all',subtypes.length);
       for(const subtype of ['personal','collaboration']){
@@ -221,9 +229,9 @@ async function expectStickyFilters(page){
       await articles.getByRole('button',{name:'All Articles',exact:true}).click();
       await expectSelection(articles,'article','all',subtypes.length);
       await articles.getByRole('button',{name:'Research',exact:true}).click();
-      await expectSelection(articles,'research','all',4);
+      await expectSelection(articles,'research','all',3);
       await articles.reload();
-      await expectSelection(articles,'research','all',4);
+      await expectSelection(articles,'research','all',3);
       await articles.close();
       console.log(`PASS temporary article discovery: ${subtypes.join(' + ')}`);
     }
@@ -236,7 +244,7 @@ async function expectStickyFilters(page){
     const noPersonal=await browser.newPage();
     await withFixtures(noPersonal,[],{removePersonal:true});
     await noPersonal.goto(url);
-    await expectSelection(noPersonal,'research','all',3);
+    await expectSelection(noPersonal,'research','all',2);
     assert.equal(await noPersonal.getByRole('button',{name:'Personal',exact:true}).isVisible(),false);
     await noPersonal.close();
     console.log('PASS empty parent and secondary categories hidden; fixture contexts removed');
