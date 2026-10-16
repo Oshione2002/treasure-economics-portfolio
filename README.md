@@ -22,8 +22,8 @@ old section fragments still resolve; their invisible anchors now lead to the abs
 The back link reads "Back to All Research" and returns to the complete Research list.
 The monetary-policy Article uses the expanded reading layout documented below.
 
-The two Research collaborations and collaborative Article include the user-confirmed contribution:
-"Literature review, methodology and econometric analysis." Personal research does not show this section.
+All four work pages include the user-confirmed contribution:
+"Literature review, methodology and econometric analysis."
 
 The thesis abstract is copied from its original PDF. ECOWAS and public-debt
 summaries were drafted from the previous case-study content; their source PDFs
@@ -125,8 +125,9 @@ registers with the site. The current abstract is transcribed verbatim from page 
 of the original monetary-policy PDF, as confirmed by the user on 16 October 2026.
 Do not substitute the private corrected reading edition's replacement abstract.
 The thesis abstract likewise follows page ix (PDF page 9) of its original, including
-its keywords. All four pages display their abstract/summary as one continuous
-paragraph, as requested on 16 October 2026. Paragraph and layout line breaks are
+its keywords. Keep keywords in their own paragraph below the abstract, not inline.
+All four pages display the abstract/summary body as one continuous paragraph,
+as requested on 16 October 2026. Paragraph and layout line breaks are
 joined with spaces; the original wording is unchanged. Keep editorial qualifications
 outside the source abstract. The supplied
 ECOWAS and public-debt originals contain no abstract, so their existing portfolio
@@ -140,7 +141,10 @@ anchor clicks and the selector keep the current section in sync. Header and mobi
 bar heights determine the sticky and bookmark offsets. Without JavaScript or when
 the script fails, readable sections and native contents links remain available.
 Preserve old question/design/evidence/quality/limits anchors as aliases to the
-appropriate sections. Article back links select `research.html?type=article`.
+appropriate sections. Article back links and end-of-page return links select
+`research.html?type=article`. With only one article, show "Return to / All Articles"
+instead of a next-research link. Research navigation stays within Research:
+thesis → ECOWAS → public debt → All Research.
 
 Run `node tests/article-details.cjs` to verify five viewport sizes, desktop/mobile
 stickiness, scrolling and keyboard navigation, abstract fidelity, old bookmarks,
