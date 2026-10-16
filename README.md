@@ -25,10 +25,10 @@ The monetary-policy Article uses the expanded reading layout documented below.
 The two Research collaborations and collaborative Article include the user-confirmed contribution:
 "Literature review, methodology and econometric analysis." Personal research does not show this section.
 
-The Research abstracts are portfolio summaries drafted from the previous case-study
-content, not verbatim manuscript abstracts. Preserve methodological caveats when
-editing them, including the conflicting result descriptions in the SME-loans manuscript.
-Original abstracts can replace these summaries when supplied and checked.
+The thesis abstract is copied from its original PDF. ECOWAS and public-debt
+summaries were drafted from the previous case-study content; their source PDFs
+do not contain abstracts. Do not invent or label those summaries as verbatim.
+Keep methodological caveats separate from the source abstracts.
 
 Future articles use the `article-detail-page` structure documented below,
 with Article / Personal or Article / Collaboration
@@ -96,6 +96,7 @@ node tests/work-filters.cjs
 node tests/about-page.cjs
 node tests/contact-ui.cjs
 node tests/abstract-pages.cjs
+node tests/original-abstracts.cjs
 ```
 
 The default test URL is `http://127.0.0.1:8003/research.html`; set `PORTFOLIO_TEST_URL`
@@ -120,8 +121,15 @@ printed title and a single verbatim abstract from the user-approved source, foll
 by Background, What the article examines, Discussion and takeaways, Limitations,
 and the confirmed contribution for collaborative articles. Publication details and
 links are omitted unless verified; never distribute private manuscripts or review
-registers with the site. The current abstract follows the replacement supplied in
-the 14 October 2026 private reading edition, not the superseded original.
+registers with the site. The current abstract is transcribed verbatim from page 2
+of the original monetary-policy PDF, as confirmed by the user on 16 October 2026.
+Do not substitute the private corrected reading edition's replacement abstract.
+The thesis abstract likewise follows page ix (PDF page 9) of its original, including
+the original paragraph divisions and keywords. Only PDF layout line breaks are
+removed. Keep editorial qualifications outside the source abstract. The supplied
+ECOWAS and public-debt originals contain no abstract, so their existing portfolio
+summaries must not be described as verbatim manuscript abstracts. Request source
+abstract text before replacing those summaries.
 
 Use a native `.article-contents` navigation linking to the existing section IDs.
 It sticks below the site header on desktop; below 900px an enhanced sticky section
