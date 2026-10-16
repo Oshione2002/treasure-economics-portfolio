@@ -117,7 +117,8 @@ working navigation and old section fragments, mobile readability and JavaScript-
 
 The monetary-policy article uses `article-detail-page`, with article-only styles in
 `assets/article-detail.css` and navigation in `assets/article-detail.js`. Keep the
-printed title and a single verbatim abstract from the user-approved source, followed
+printed title wording (displayed in sentence case, not all caps) and a single
+verbatim abstract from the user-approved source, followed
 by Background, What the article examines, Discussion and takeaways, Limitations,
 and the confirmed contribution for collaborative articles. Publication details and
 links are omitted unless verified; never distribute private manuscripts or review

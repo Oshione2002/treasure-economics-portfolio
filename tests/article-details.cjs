@@ -4,7 +4,7 @@ const path=require('node:path');
 const {chromium}=require('playwright');
 const base=new URL(process.env.PORTFOLIO_TEST_URL||'http://127.0.0.1:8003/');
 const file='work-monetary-policy-sme-loans.html';
-const title='THE IMPACT OF THE MONETARY POLICY RATE ON COMMERCIAL BANKS’ LOANS TO SMALL-SCALE ENTERPRISES IN NIGERIA';
+const title='The impact of the monetary policy rate on commercial banks’ loans to small-scale enterprises in Nigeria';
 const {monetary:abstract}=require('./fixtures/original-abstracts.cjs');
 const headings=['Abstract','Background','What the article examines','Discussion and takeaways','Limitations','My contribution'];
 const aliases={abstract:'abstract',question:'article-focus',design:'article-focus',evidence:'discussion',quality:'limitations',limits:'limitations'};
@@ -34,9 +34,18 @@ async function visibleHeading(page,id){
     const errors=[];page.on('pageerror',error=>errors.push(error.message));
     for(const width of [1440,979,820,390,320]){
       await page.setViewportSize({width,height:900});
+      for(const listing of ['index.html','research.html?type=article']){
+        await page.goto(new URL(listing,base).href,{waitUntil:'networkidle'});
+        const link=page.locator('h2 a[href="'+file+'"],h3 a[href="'+file+'"]');
+        assert.equal(await link.textContent(),title,'Consistent sentence-case listing title');
+        assert.equal(await link.evaluate(node=>getComputedStyle(node).textTransform),'none');
+        assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
+      }
       const response=await page.goto(new URL(file,base).href,{waitUntil:'networkidle'});
       assert.equal(response.status(),200);
       assert.equal(await page.locator('h1').textContent(),title);
+      assert.equal(await page.title(),title+' | Treasure Alelume');
+      assert.equal(await page.locator('h1').evaluate(node=>getComputedStyle(node).textTransform),'none');
       assert.equal(await page.locator('.article-detail-meta').textContent(),'Article · Collaboration');
       assert.deepEqual(await page.locator('.article-detail-copy h2').allTextContents(),headings);
       assert.equal(await page.locator('#abstract>p').count(),1);
