@@ -4,7 +4,9 @@ const originals=require('./fixtures/original-abstracts.cjs');
 const base=new URL(process.env.PORTFOLIO_TEST_URL||'http://127.0.0.1:8003/');
 const cases=[
   ['work-monetary-policy-sme-loans.html',[originals.monetary]],
-  ['work-government-spending-human-capital.html',originals.government]
+  ['work-government-spending-human-capital.html',[originals.government.join(' ')]],
+  ['work-ecowas-free-movement.html',null],
+  ['work-public-debt-composition.html',null]
 ];
 (async()=>{
   const browser=await chromium.launch({channel:process.env.PORTFOLIO_BROWSER||'msedge',headless:true});
@@ -19,11 +21,16 @@ const cases=[
           const response=await page.goto(new URL(file+'#abstract',base).href);
           assert.equal(response.status(),200);
           assert.equal(await page.locator('#abstract-heading').textContent(),'Abstract');
-          assert.deepEqual(await page.locator('#abstract p').allTextContents(),paragraphs);
+          const abstract=page.locator('.abstract-copy>p, #abstract>p');
+          assert.equal(await abstract.count(),1,'One continuous paragraph, excluding the contribution');
+          if(paragraphs)assert.deepEqual(await abstract.allTextContents(),paragraphs);
+          if(file!=='work-government-spending-human-capital.html'){
+            assert.equal(await page.locator('.work-contribution p').textContent(),'Literature review, methodology and econometric analysis.');
+          }
           assert.equal(await page.locator('#abstract').isVisible(),true);
           assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
         }
-        console.log('PASS original PDF abstracts '+width+'px, JS '+javaScriptEnabled);
+        console.log('PASS four single-paragraph summaries and two original PDF abstracts '+width+'px, JS '+javaScriptEnabled);
       }
       assert.deepEqual(errors,[]);await context.close();
     }

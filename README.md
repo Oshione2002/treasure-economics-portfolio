@@ -125,8 +125,10 @@ registers with the site. The current abstract is transcribed verbatim from page 
 of the original monetary-policy PDF, as confirmed by the user on 16 October 2026.
 Do not substitute the private corrected reading edition's replacement abstract.
 The thesis abstract likewise follows page ix (PDF page 9) of its original, including
-the original paragraph divisions and keywords. Only PDF layout line breaks are
-removed. Keep editorial qualifications outside the source abstract. The supplied
+its keywords. All four pages display their abstract/summary as one continuous
+paragraph, as requested on 16 October 2026. Paragraph and layout line breaks are
+joined with spaces; the original wording is unchanged. Keep editorial qualifications
+outside the source abstract. The supplied
 ECOWAS and public-debt originals contain no abstract, so their existing portfolio
 summaries must not be described as verbatim manuscript abstracts. Request source
 abstract text before replacing those summaries.
