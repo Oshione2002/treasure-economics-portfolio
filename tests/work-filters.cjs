@@ -145,8 +145,10 @@ async function expectStickyFilters(page){
       await page.getByRole('button',{name:'All Research',exact:true}).click();
       await expectSelection(page,'research','all',3);
       await page.getByRole('button',{name:'Articles',exact:true}).click();
-      await expectSelection(page,'article','all',1);
-      assert.equal(await page.locator('[data-filter-group="article"] [data-filter-subtype="personal"]').isVisible(),false);
+      await expectSelection(page,'article','all',6);
+      assert.equal(await page.locator('[data-filter-group="article"] [data-filter-subtype="personal"]').isVisible(),true);
+      await page.getByRole('button',{name:'Personal',exact:true}).click();
+      await expectSelection(page,'article','personal',5);
       await page.getByRole('button',{name:'Collaborations',exact:true}).click();
       await expectSelection(page,'article','collaboration',1);
       assert.equal(await page.locator(visibleCards+' h2 a').getAttribute('href'),'work-monetary-policy-sme-loans.html');
@@ -194,19 +196,19 @@ async function expectStickyFilters(page){
     const noJS=await browser.newContext({javaScriptEnabled:false,viewport:{width:390,height:900}});
     const fallback=await noJS.newPage();
     await fallback.goto(url);
-    assert.equal(await fallback.locator(visibleCards).count(),4);
+    assert.equal(await fallback.locator(visibleCards).count(),9);
     assert.equal(await fallback.locator('[data-work-filters]').isVisible(),false);
     assert.equal(await fallback.locator('.work-filter-bar').isVisible(),false);
     await noJS.close();
-    console.log('PASS JavaScript disabled: all four cards visible, controls hidden');
+    console.log('PASS JavaScript disabled: all nine cards visible, controls hidden');
     const failedScript=await browser.newPage();
     await failedScript.route('**/assets/site.js',route=>route.abort());
     await failedScript.goto(url);
-    assert.equal(await failedScript.locator(visibleCards).count(),4);
+    assert.equal(await failedScript.locator(visibleCards).count(),9);
     assert.equal(await failedScript.locator('[data-work-filters]').isVisible(),false);
     assert.equal(await failedScript.locator('.work-filter-bar').isVisible(),false);
     await failedScript.close();
-    console.log('PASS script load failure: all four cards visible, controls hidden');
+    console.log('PASS script load failure: all nine cards visible, controls hidden');
 
     for(const subtypes of [['personal','collaboration'],['personal'],['collaboration']]){
       const articles=await browser.newPage({viewport:{width:390,height:900}});

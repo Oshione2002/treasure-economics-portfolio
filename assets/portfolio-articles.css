@@ -1,0 +1,28 @@
+/* Source-backed portfolio articles. Existing research and article pages are unchanged. */
+.portfolio-article .article-subtitle{max-width:800px;margin:22px 0 0;color:var(--muted);font-size:17px;line-height:1.6}
+.portfolio-article .article-contents{max-height:calc(100dvh - var(--article-header-height) - 44px);overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin}
+.portfolio-article .article-detail-copy h3{font-size:1.35rem;line-height:1.35;margin:28px 0 14px;letter-spacing:-.02em;color:var(--ink)}
+.portfolio-article .article-detail-copy ul{padding-left:24px;margin:0 0 20px}
+.portfolio-article .article-detail-copy li{margin-bottom:10px}
+.portfolio-article .article-detail-copy a{color:var(--ink);text-decoration:underline;text-underline-offset:3px;overflow-wrap:anywhere}
+.portfolio-article .article-detail-copy a:hover{color:var(--signal)}
+.portfolio-article .article-detail-copy a:focus-visible,.portfolio-article [tabindex="0"]:focus-visible{outline:2px solid var(--signal);outline-offset:4px}
+.portfolio-article .article-source-note,.portfolio-article .work-keywords{font-family:"Segoe UI",Arial,sans-serif;font-size:14px;line-height:1.6;color:var(--muted)}
+.portfolio-article .article-figure{margin:28px 0;max-width:100%}
+.portfolio-article .article-figure img{display:block;width:100%;height:auto;background:#fff}
+.portfolio-article .article-figure figcaption{margin-top:12px;font-family:"Segoe UI",Arial,sans-serif;font-size:14px;line-height:1.6;color:var(--muted)}
+.portfolio-article .article-table-scroll{max-width:100%;overflow-x:auto;margin:24px 0;overscroll-behavior-x:contain}
+.portfolio-article .article-data-table{width:100%;border-collapse:collapse;font-family:"Segoe UI",Arial,sans-serif;font-size:14px;line-height:1.5;color:var(--ink)}
+.portfolio-article .article-data-table caption{text-align:left;padding:0 0 12px;font-weight:600;line-height:1.5}
+.portfolio-article .article-data-table th,.portfolio-article .article-data-table td{padding:12px;text-align:left;vertical-align:top;border-bottom:1px solid var(--rule);min-width:95px}
+.portfolio-article .article-data-table thead th{background:var(--paper);border-top:1px solid var(--rule);font-weight:600}
+.portfolio-article .article-data-table tbody th{font-weight:400;min-width:150px}
+.portfolio-article .article-data-table tbody tr:nth-child(even){background:var(--paper)}
+.portfolio-article .article-definitions{margin:24px 0;font-size:17px}
+.portfolio-article .article-definitions dt{font-weight:700;color:var(--ink);margin-top:18px}
+.portfolio-article .article-definitions dd{margin:4px 0 0}
+.portfolio-article .article-equation{max-width:100%;overflow-x:auto;white-space:nowrap;padding:12px 0;font-size:17px}
+.portfolio-article section[id="references"] p,.portfolio-article section[id="selected-references"] p,.portfolio-article section[id="selected-sources"] p{font-size:16px;line-height:1.6;overflow-wrap:anywhere}
+.portfolio-article .next-study .article-return{font-family:"Segoe UI",Arial,sans-serif;font-size:14px;text-decoration:underline;text-underline-offset:4px}
+@media(max-width:900px){.portfolio-article .article-contents{max-height:none;overflow:visible}}
+@media(max-width:760px){.portfolio-article .article-subtitle{font-size:16px}.portfolio-article .article-detail-copy h3{font-size:1.2rem}.portfolio-article .article-data-table th,.portfolio-article .article-data-table td{padding:10px}.portfolio-article .article-equation{font-size:15px}.portfolio-article .article-definitions{font-size:16px}}

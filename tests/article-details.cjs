@@ -99,7 +99,7 @@ async function visibleHeading(page,id){
     await page.getByRole('button',{name:'Toggle navigation'}).click();assert.equal(await page.getByRole('link',{name:'About',exact:true}).isVisible(),true);await page.getByRole('button',{name:'Toggle navigation'}).click();
     await page.locator('.back-link').click();
     await page.waitForFunction(()=>document.querySelector('[data-filter-type="article"]').getAttribute('aria-pressed')==='true');
-    assert.equal(await page.locator('.work-card:visible').count(),1);assert.equal(await page.locator('.work-card:visible h2 a').getAttribute('href'),file);
+    assert.equal(await page.locator('.work-card:visible').count(),6);assert.equal(await page.locator('.work-card:visible h2 a').first().getAttribute('href'),file);
     await page.goto(new URL('research.html',base).href);assert.equal(await page.locator('[data-filter-type="research"]').getAttribute('aria-pressed'),'true');assert.equal(await page.locator('.work-card:visible').count(),3);
     for(const javaScriptEnabled of [false,true]){
       const context=await browser.newContext({javaScriptEnabled,viewport:{width:390,height:900},reducedMotion:'reduce'});const fallback=await context.newPage();

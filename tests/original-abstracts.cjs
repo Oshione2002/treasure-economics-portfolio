@@ -56,7 +56,7 @@ const nextItems={
           if(javaScriptEnabled&&href.startsWith('research.html')){
             const type=href.includes('type=article')?'article':'research';
             await page.waitForFunction(type=>document.querySelector('[data-filter-type="'+type+'"]').getAttribute('aria-pressed')==='true',type);
-            assert.equal(await page.locator('.work-card:visible').count(),type==='article'?1:3);
+            assert.equal(await page.locator('.work-card:visible').count(),type==='article'?6:3);
           }else assert.equal(await page.locator('h1').count(),1);
         }
         console.log('PASS abstract wording, separate keywords, all contributions, category-correct keyboard navigation '+width+'px, JS '+javaScriptEnabled);

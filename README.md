@@ -9,6 +9,7 @@ An editorial, evidence-led static portfolio built with plain HTML, CSS and JavaS
 - `about.html` - research biography, methods, tools and education
 - `get-in-touch.html` - email/phone contact and enquiry form
 - `work-*.html` - three Research abstract pages and one expanded Article page
+- `article-*.html` - five personal articles with tables, figures and sticky contents
 - `assets/Treasure-Alelume-CV.pdf` - downloadable CV
 
 The work pages distinguish Treasure's undergraduate thesis, Research collaborations and collaborative Article and do not claim that any work is peer reviewed or published. Full collaborative manuscripts are intentionally not distributed through the site.
@@ -58,7 +59,7 @@ Keep the existing title-and-description card structure when adding work (no side
 a future personal article card starts with `<article class="work-card" data-work-type="article" data-work-subtype="personal">`.
 Both types display Personal and Collaborations filters. The existing thesis is Personal;
 ECOWAS and public debt are Research / Collaborations; monetary policy is Article / Collaboration.
-Current counts are Research 3 (Personal 1, Collaborations 2) and Articles 1 (Collaborations 1).
+Current counts are Research 3 (Personal 1, Collaborations 2) and Articles 6 (Personal 5, Collaborations 1).
 Publication status is not a filter.
 The first article automatically reveals Articles and its populated ownership filters; empty
 categories stay hidden. Do not add placeholder cards just to expose a category.
@@ -143,10 +144,37 @@ bar heights determine the sticky and bookmark offsets. Without JavaScript or whe
 the script fails, readable sections and native contents links remain available.
 Preserve old question/design/evidence/quality/limits anchors as aliases to the
 appropriate sections. Article back links and end-of-page return links select
-`research.html?type=article`. With only one article, show "Return to / All Articles"
-instead of a next-research link. Research navigation stays within Research:
+`research.html?type=article`. The original monetary-policy article returns to All
+Articles; the new personal articles link to the next personal article and All Articles. Research navigation stays within Research:
 thesis → ECOWAS → public debt → All Research.
 
 Run `node tests/article-details.cjs` to verify five viewport sizes, desktop/mobile
 stickiness, scrolling and keyboard navigation, abstract fidelity, old bookmarks,
 resizing, category navigation, and JavaScript-off/script-failure fallbacks.
+
+## October 2026 personal articles
+
+Five reviewed portfolio manuscripts are published as `article-*.html` under
+Articles / Personal. Current work counts are Research 3 (Personal 1,
+Collaborations 2) and Articles 6 (Personal 5, Collaborations 1).
+
+The electricity, food-price/nutrition, graduate-mismatch, minimum-wage and GenAI
+articles retain the latest approved portfolio prose, source tables, charts,
+references and methodological caveats. M02 uses the Replication Aligned edition;
+M01 uses Fiscal Years Clarified; M04 uses Reviewer Corrections; M09 uses Exposure
+Interpretation Corrected; P08 uses the Final portfolio edition. Headings and
+titles are adapted for web navigation, not substantive findings. An abstract is
+shown only where the portfolio source contains one; other pieces open with their
+existing introduction or executive summary. No abstract is fabricated.
+
+These pages reuse `article-detail.js` for sticky contents and mobile section
+selection, with isolated table/figure styles in `assets/portfolio-articles.css`.
+All source tables remain semantic, keyboard-scrollable and readable without
+JavaScript. The 14 published charts are extracted from the reviewed documents,
+not redrawn with invented data. The M02 dietary-diversity chart shows both visits.
+
+Only the article text and embedded aggregate figures are published. Word files,
+full academic manuscripts, household/firm datasets, Stata logs, scripts and ZIP
+replication packages stay outside the public repository. No publication or
+peer-review status is asserted. Run `node tests/portfolio-articles.cjs` for source
+structure, asset, category, navigation and confidentiality-boundary checks.
