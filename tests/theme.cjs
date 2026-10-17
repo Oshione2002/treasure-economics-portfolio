@@ -106,6 +106,8 @@ assert.doesNotMatch(source,/data-theme-select|createElement\('(?:label|select|op
 assert.doesNotMatch(css,/\.theme-control/);
 assert.match(css,/\.theme-toggle[^}]*width:44px/);
 assert.match(css,/\.nav-links \.nav-contact\{font-weight:700\}/,'Contact navigation label is bold in both themes');
+assert.match(css,/body \.button-row\{display:flex;flex-wrap:wrap;align-items:flex-start\}/,'Action rows wrap instead of becoming a full-width mobile grid');
+assert.match(css,/\.button-row>\.button\{flex:0 1 auto;width:auto;min-width:0;max-width:100%;overflow-wrap:anywhere\}/,'Buttons fit their labels without growing across the row');
 assert.match(css,/html\[data-theme="dark"\] \.about-name\{background:transparent;padding:0;color:#ff866e\}/,'About name stays orange without a pale background');
 assert.match(css,/min-height:44px/);
 assert.match(css,/@media\(max-width:760px\)/);

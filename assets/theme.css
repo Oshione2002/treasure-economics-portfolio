@@ -1,5 +1,8 @@
 /* Warm neutral surfaces and text, retaining the original orange and blue palette. */
 :root{color-scheme:light}
+/* Keep action buttons content-sized, including on narrow screens. */
+body .button-row{display:flex;flex-wrap:wrap;align-items:flex-start}
+.button-row>.button{flex:0 1 auto;width:auto;min-width:0;max-width:100%;overflow-wrap:anywhere}
 .nav-links{gap:clamp(14px,2.2vw,30px)}
 .nav-links .nav-contact{font-weight:700}
 .theme-toggle{display:inline-flex;align-items:center;justify-content:center;flex:0 0 44px;width:44px;min-height:44px;padding:10px;border:0;border-radius:0;background:transparent;color:var(--ink);cursor:pointer}
