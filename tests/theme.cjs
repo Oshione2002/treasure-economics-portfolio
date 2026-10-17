@@ -105,6 +105,7 @@ assert.match(css,/\.nav-shell\.open \.theme-toggle/);
 assert.doesNotMatch(source,/data-theme-select|createElement\('(?:label|select|option)'\)/);
 assert.doesNotMatch(css,/\.theme-control/);
 assert.match(css,/\.theme-toggle[^}]*width:44px/);
+assert.match(css,/\.nav-links \.nav-contact\{font-weight:700\}/,'Contact navigation label is bold in both themes');
 assert.match(css,/min-height:44px/);
 assert.match(css,/@media\(max-width:760px\)/);
 assert.match(css,/html\[data-theme="dark"\] \.article-detail-meta,\s*html\[data-theme="dark"\] \.abstract-meta,\s*html\[data-theme="dark"\] \.research-post-meta\{display:block;background:transparent;padding:0;color:#ff866e\}/,'Research/article type labels have no pale box or badge padding');
