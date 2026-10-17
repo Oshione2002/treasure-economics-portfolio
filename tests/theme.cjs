@@ -107,6 +107,7 @@ assert.doesNotMatch(css,/\.theme-control/);
 assert.match(css,/\.theme-toggle[^}]*width:44px/);
 assert.match(css,/min-height:44px/);
 assert.match(css,/@media\(max-width:760px\)/);
+assert.match(css,/html\[data-theme="dark"\] \.article-detail-meta,\s*html\[data-theme="dark"\] \.abstract-meta,\s*html\[data-theme="dark"\] \.research-post-meta\{display:block;background:transparent;padding:0;color:#ff866e\}/,'Research/article type labels have no pale box or badge padding');
 for(const value of ['#20211f','#282922','#f2efe7','#b4b2a7','#515149'])assert.ok(css.includes(value));
 const styles=fs.readFileSync(path.join(root,'assets/styles.css'),'utf8');
 assert.match(styles,/--signal:#e24d2f/);assert.match(styles,/--blue:#244d73/);
@@ -117,5 +118,6 @@ function contrast(a,b){const x=luminance(a),y=luminance(b);return (Math.max(x,y)
 for(const [label,foreground,background] of [
   ['dark body','#deddd5','#282922'],['dark secondary','#b4b2a7','#282922'],['dark headings','#f2efe7','#20211f'],
   ['orange button text','#131412','#e24d2f'],['original orange labels','#a93822','#f3f0e8'],['original blue panel','#ffffff','#244d73'],
+  ['unboxed dark type labels','#ff866e','#282922'],
 ])assert.ok(contrast(foreground,background)>=4.5,label+' contrast '+contrast(foreground,background));
 console.log('PASS principal dark-theme text, unchanged orange buttons, original deep-orange labels and blue-panel contrast');

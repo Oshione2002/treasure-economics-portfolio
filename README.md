@@ -211,9 +211,11 @@ prevents reading or switching. Without JavaScript, the original light site remai
 readable and no non-functional theme button is shown.
 
 The warm-charcoal dark palette changes neutral surfaces, text and borders only.
-Every original orange shade and the original blue remain unchanged. Deep-orange
-name/type labels retain their colour on a paper backing; text on orange buttons
-is dark for contrast. Blue sections and source charts/photos are not recoloured.
+The original orange and blue palette is retained. The name highlight keeps its
+paper backing; research/article type labels have no box or extra padding and use
+the existing lighter orange on dark surfaces. Light-mode labels are unchanged.
+Text on orange buttons is dark for contrast. Blue sections and source
+charts/photos are not recoloured.
 The shared theme overlay does not change article data, filtering or sticky offsets.
 
 Run `node tests/theme.cjs` for preference, OS-change, cross-tab, blocked-storage,

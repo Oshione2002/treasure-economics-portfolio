@@ -1,4 +1,4 @@
-/* Neutral surfaces and text only. Every existing orange shade and the blue stay unchanged. */
+/* Warm neutral surfaces and text, retaining the original orange and blue palette. */
 :root{color-scheme:light}
 .nav-links{gap:clamp(14px,2.2vw,30px)}
 .theme-toggle{display:inline-flex;align-items:center;justify-content:center;flex:0 0 44px;width:44px;min-height:44px;padding:10px;border:0;border-radius:0;background:transparent;color:var(--ink);cursor:pointer}
@@ -40,9 +40,10 @@ html[data-theme="dark"] .contact-layout>div{color:#131412}
 html[data-theme="dark"] .contact-layout a{border-bottom-color:currentColor}
 /* Retain the original deep orange lettering on a small, readable paper backing. */
 html[data-theme="dark"] .about-name{background:#f3f0e8;padding-inline:3px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+/* Type labels stay unboxed, using an existing orange shade with dark-surface contrast. */
 html[data-theme="dark"] .article-detail-meta,
 html[data-theme="dark"] .abstract-meta,
-html[data-theme="dark"] .research-post-meta{display:table;background:#f3f0e8;padding:4px 8px}
+html[data-theme="dark"] .research-post-meta{display:block;background:transparent;padding:0;color:#ff866e}
 html[data-theme="dark"] .form-status[data-state="error"],
 html[data-theme="dark"] .form-status[data-state="success"]{background:#f3f0e8;padding:8px 12px}
 html[data-theme="dark"] .callout-warning{color:#16181b}
