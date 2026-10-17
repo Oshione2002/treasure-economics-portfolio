@@ -1,0 +1,68 @@
+{
+  "electricity-reliability-small-firms": [
+    "abstract",
+    "introduction",
+    "literature-and-analytical-framework",
+    "data-and-empirical-approach",
+    "electricity-exposure-among-nigerian-small-firms",
+    "regression-evidence",
+    "regional-patterns-and-policy-interpretation",
+    "limitations-and-next-research-steps",
+    "conclusion",
+    "data-and-methods-in-brief",
+    "references"
+  ],
+  "food-prices-household-nutrition": [
+    "overview",
+    "the-setting",
+    "building-the-price-shock-correctly",
+    "what-changed-between-the-two-visits",
+    "methodology-and-model-specification",
+    "what-the-result-does-and-does-not-say",
+    "why-the-mixed-outcomes-are-plausible",
+    "what-should-come-next",
+    "references"
+  ],
+  "graduate-qualification-mismatch": [
+    "overview",
+    "why-this-question-matters",
+    "what-i-measured",
+    "methodology-and-model-specification",
+    "the-headline-result-about-62-to-82-of-employed-graduates-depending-on-the-benchmark",
+    "the-result-stays-high-across-all-five-quarters",
+    "occupation-detail-makes-the-result-easier-to-understand",
+    "the-pay-result-is-negative-but-it-is-also-definition-sensitive",
+    "education-above-the-benchmark-is-not-worthless",
+    "what-the-wider-evidence-adds",
+    "what-the-result-does-not-mean",
+    "the-policy-question-is-partly-about-jobs-not-just-education",
+    "bottom-line",
+    "data-and-method-note",
+    "selected-sources"
+  ],
+  "minimum-wage-employment-informality": [
+    "overview",
+    "project-at-a-glance",
+    "the-question-behind-the-headline",
+    "methodology-and-model-specification",
+    "what-happened-to-the-share-earning-below-70-000",
+    "what-the-econometrics-found",
+    "why-i-did-not-call-the-wage-decline-a-causal-effect",
+    "what-the-evidence-means",
+    "research-skills-demonstrated",
+    "data-and-reproducibility",
+    "selected-sources"
+  ],
+  "generative-ai-graduate-jobs": [
+    "executive-summary",
+    "why-this-question-matters",
+    "methodology-and-model-specification",
+    "where-graduate-exposure-is-concentrated",
+    "which-graduate-occupations-drive-high-exposure",
+    "what-the-econometric-results-add",
+    "policy-implications",
+    "what-this-project-demonstrates",
+    "conclusion",
+    "selected-references"
+  ]
+}

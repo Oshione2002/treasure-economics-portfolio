@@ -160,17 +160,25 @@ Collaborations 2) and Articles 6 (Personal 5, Collaborations 1).
 
 The electricity, food-price/nutrition, graduate-mismatch, minimum-wage and GenAI
 articles retain the latest approved portfolio prose, source tables, charts,
-references and methodological caveats. M02 uses the Replication Aligned edition;
-M01 uses Fiscal Years Clarified; M04 uses Reviewer Corrections; M09 uses Exposure
-Interpretation Corrected; P08 uses the Final portfolio edition. Headings and
-titles are adapted for web navigation, not substantive findings. An abstract is
-shown only where the portfolio source contains one; other pieces open with their
-existing introduction or executive summary. No abstract is fabricated.
+references and methodological caveats. All five use the 17 October shared-outline
+editions: M01 and M04 Shared Outline, M02 All Tables Figures, M09 All Full Research
+Tables and Charts, and P08 All Tables Charts. Every article has eight main sections:
+Introduction, Research question, Data and methodology, Findings and discussion,
+Implications, Limitations, Conclusion, and References. Original section bookmarks
+remain available through anchor aliases. No abstract is fabricated.
+
+Three editorial corrections are applied on the website only; source Word files
+are unchanged. P08 Table 4 identifies separate sample and household-cluster counts
+for exposure (4,734 / 3,682), weekly hours (4,530 / 3,561) and earnings
+(2,025 / 1,632, restricted to 2024 Q3–Q4). Rounded p-values of 0.000 in P08
+Table 4 and M09 Tables 3 and 6 are displayed as <0.001. M04 Limitations explicitly
+states repeated-cross-section, benchmark, earnings-sample and non-causal limits.
+Model estimates are not rerun or changed.
 
 These pages reuse `article-detail.js` for sticky contents and mobile section
 selection, with isolated table/figure styles in `assets/portfolio-articles.css`.
 All source tables remain semantic, keyboard-scrollable and readable without
-JavaScript. The 14 published charts are extracted from the reviewed documents,
+JavaScript. The 25 data tables and 19 published charts come from the reviewed documents,
 not redrawn with invented data. The M02 dietary-diversity chart shows both visits.
 
 Only the article text and embedded aggregate figures are published. Word files,

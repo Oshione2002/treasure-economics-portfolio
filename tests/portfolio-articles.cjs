@@ -4,11 +4,11 @@ const fs=require('node:fs');
 const path=require('node:path');
 const root=path.resolve(__dirname,'..');
 const posts=[
-  ['electricity-reliability-small-firms',4,3,/conditional associations rather than causal effects/],
-  ['food-prices-household-nutrition',1,3,/4\.235 to 3\.938/],
+  ['electricity-reliability-small-firms',4,3,/conditional associations rather than causal estimates/],
+  ['food-prices-household-nutrition',5,4,/4\.235 to 3\.938/],
   ['graduate-qualification-mismatch',5,3,/F\(1, 934\) = 3\.40, p = \.0655/],
-  ['minimum-wage-employment-informality',1,2,/do not estimate the reform(?:&#x27;|&#39;|’)s total national effect/],
-  ['generative-ai-graduate-jobs',1,3,/should not be interpreted as evidence about GenAI adoption, displacement, or changes in employment/],
+  ['minimum-wage-employment-informality',7,5,/do not estimate the reform(?:&#x27;|&#39;|’)s total national effect/],
+  ['generative-ai-graduate-jobs',4,4,/should not be interpreted as evidence about GenAI adoption, displacement, or changes in employment/],
 ];
 let figures=0;
 for(const [slug,tables,images,caveat] of posts){
@@ -32,6 +32,8 @@ for(const [slug,tables,images,caveat] of posts){
     else if(!/^(?:https?:|mailto:|tel:)/.test(href))assert.ok(fs.existsSync(path.join(root,href.split(/[?#]/)[0])),'Valid local link '+href);
   }
   const sections=[...html.matchAll(/<section id="([^"]+)"[^>]*data-article-section>/g)].map(m=>m[1]);
+  assert.deepEqual(sections,['introduction','research-question','data-and-methodology','findings-and-discussion','implications','limitations','conclusion','references']);
+  for(const id of require('./portfolio-article-bookmarks.json')[slug])assert.ok(ids.includes(id),'Retain old bookmark '+id);
   const nav=html.match(/<nav class="article-contents"[\s\S]*?<\/nav>/)[0];
   assert.deepEqual([...nav.matchAll(/href="#([^"]+)"/g)].map(m=>m[1]),sections);
   assert.deepEqual([...html.matchAll(/<option value="([^"]+)">/g)].map(m=>m[1]),sections);
@@ -43,7 +45,19 @@ for(const [slug,tables,images,caveat] of posts){
   }
   console.log('PASS '+slug+': sections, source caveat, '+tables+' accessible tables, '+images+' PNG figures, navigation and private-file boundary');
 }
-assert.equal(figures,14);
+assert.equal(figures,19);
+const p08=fs.readFileSync(path.join(root,'article-generative-ai-graduate-jobs.html'),'utf8');
+assert.match(p08,/Weekly-hours model: N = 4,530; 3,561 household clusters/);
+assert.match(p08,/Both earnings models: N = 2,025; 1,632 household clusters, restricted to 2024 Q3–Q4/);
+assert.match(p08,/Exposure models: N = 4,734; 3,682 household clusters/);
+for(const slug of ['minimum-wage-employment-informality','generative-ai-graduate-jobs']){
+  const html=fs.readFileSync(path.join(root,'article-'+slug+'.html'),'utf8');
+  assert.doesNotMatch(html,/<td>0\.000<\/td>/);
+  assert.ok((html.match(/<td>&lt;0\.001<\/td>/g)||[]).length >= (slug.startsWith('minimum')?2:1));
+}
+const mismatch=fs.readFileSync(path.join(root,'article-graduate-qualification-mismatch.html'),'utf8');
+assert.match(mismatch,/repeated cross-sections do not follow the same workers/);
+assert.match(mismatch,/paid-graduate earnings analysis uses 722 observations/);
 const work=fs.readFileSync(path.join(root,'research.html'),'utf8');
 const cards=[...work.matchAll(/<article class="work-card[^>]*data-work-type="([^"]+)" data-work-subtype="([^"]+)"[\s\S]*?<\/article>/g)];
 assert.equal(cards.length,9);
