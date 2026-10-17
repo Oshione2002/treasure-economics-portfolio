@@ -1,0 +1,278 @@
+{
+  "electricity-reliability-small-firms": {
+    "tables": [
+      {
+        "caption": "Table 1. Data sources and analytical samples",
+        "sha256": "6e3e99d2000845df5c9b4face3e0a2f62a8056db8e9c12638c76317aa3fc331e",
+        "rows": 4,
+        "columns": 4,
+        "notes": [
+          "Note: Small firms are establishments with 5 to 19 permanent full-time workers. For growth regressions, the small-firm classification is based on employment at the lagged baseline period so that sample membership is not defined by the later employment outcome."
+        ]
+      },
+      {
+        "caption": "Table 2. Core variables and construction",
+        "sha256": "c8a7e87b967919328d668f6f5dfeeea598c7171fd7632e217f5ba3e393777e50",
+        "rows": 10,
+        "columns": 4,
+        "notes": []
+      },
+      {
+        "caption": "Table 3. Weighted electricity indicators for current small firms",
+        "sha256": "33d56b274e64c61858d2d27d014af874672f737364fbc78e9d28d8d705f30ae1",
+        "rows": 8,
+        "columns": 4,
+        "notes": [
+          "Note: Means are reported for binary shares; medians are reported for skewed continuous outage and generator-share measures. Values are survey-weighted."
+        ]
+      },
+      {
+        "caption": "Table 4. Main 2025 weighted regression coefficients",
+        "sha256": "2968594748476735cae925893d5d70c7463c415e03658f73746e0cf342fdb4d1",
+        "rows": 5,
+        "columns": 6,
+        "notes": [
+          "Notes: Each cell reports the outage coefficient with HC1 robust standard error in parentheses. Models use WBES median survey weights and control for firm age, manager experience, exporter status, foreign ownership, female ownership, finance access, region fixed effects, and broad-sector fixed effects. *** p<0.01, ** p<0.05, * p<0.10."
+        ]
+      },
+      {
+        "caption": "Table 5. Historical first-difference estimates for baseline-small linked firms",
+        "sha256": "c89ce78a1e0f9ed5c17906b1c577dda8fee42928797014bf9f47e80f92ba7c9b",
+        "rows": 9,
+        "columns": 6,
+        "notes": [
+          "Note: All models include baseline-region fixed effects and pair-type fixed effects distinguishing 2007-to-2014 from 2009-to-2014 links. * p<0.10."
+        ]
+      },
+      {
+        "caption": "Table 6. Robustness of 2025 outage-frequency estimates",
+        "sha256": "74c067ef9901ea054ed8779e8630cfedeabd930f6fe8c2f9dc632604c978f795",
+        "rows": 13,
+        "columns": 6,
+        "notes": []
+      },
+      {
+        "caption": "Table A1. Main 2014 weighted regression coefficients",
+        "sha256": "b9b00c91b84c3b92541026f625ec09bda3746fbab4f1d83f1cbdbc978a203f95",
+        "rows": 5,
+        "columns": 6,
+        "notes": [
+          "Notes: WBES median survey weights and HC1 robust standard errors. Controls and fixed effects match Table 4. *** p<0.01, ** p<0.05, * p<0.10."
+        ]
+      }
+    ],
+    "figures": [
+      "527800090f65b6b72b4a1e3be216abc1d28c5d120e00951b145397691c94272c",
+      "2cc3151686682a3c61e85688ffa4d6283dfa2b6fa8dcfd50b6b594cd4d1d70ff",
+      "35aaf8df5e71855b7a5add41688079db628afa89dfb08c6b0b3e90572af906e7"
+    ]
+  },
+  "food-prices-household-nutrition": {
+    "tables": [
+      {
+        "caption": "Table 1.",
+        "sha256": "b975d7667f3a3142c204614c47aeb76ba1ecc0d126c1e70b1916a3351d37bd4c",
+        "rows": 8,
+        "columns": 2
+      },
+      {
+        "caption": "Table 2.",
+        "sha256": "32815209aa786a5436a2dfcce894a258bf0b28937a3ede86fe23ee9935ad25f4",
+        "rows": 11,
+        "columns": 4
+      },
+      {
+        "caption": "Table 3.",
+        "sha256": "59d58ca9e4aa1131cd1031e99fc8ab15c432b40707f661ab73e7dd926537f852",
+        "rows": 11,
+        "columns": 8
+      },
+      {
+        "caption": "Table 4.",
+        "sha256": "460be359d0fae1f62f5cf32970cea9ba429927455f93780cca99b01162712b30",
+        "rows": 26,
+        "columns": 5
+      },
+      {
+        "caption": "Table 5.",
+        "sha256": "9c3fd0b68816500dfa1c6c78b1da9b5008d2cb93d6c19f4ef6afaed071df5d77",
+        "rows": 11,
+        "columns": 5
+      }
+    ],
+    "figures": [
+      "b62991ec53a91d000042891e38b8f7a2aed239cdf07e742ee2366fde73e33ea6",
+      "2083580d3f441c565f54190c84cd469d715e6005143ceb1ae8a24a2500db7877",
+      "97b1c58b230e6111ef25f2577cf4e7db1278efe5f75e9c5b2867ff94066dd8a2",
+      "0aef96d04fffe1bf66062647d625d669f159aea200ed423a6bbba6436c67ee23"
+    ]
+  },
+  "graduate-qualification-mismatch": {
+    "tables": [
+      {
+        "caption": "Table 1. Sample construction",
+        "sha256": "79981d68b806ebadcfde5a8f3205f47afbc91133f1ec94c2dc70e817c3ead0a2",
+        "rows": 7,
+        "columns": 3,
+        "notes": [
+          "Note: Counts are unweighted person-quarter observations. Survey weights are used for population estimates and regression weighting."
+        ]
+      },
+      {
+        "caption": "Table 2. Description and measurement of main variables",
+        "sha256": "99cfb6bcfd2e9ff7b8f66a98e2d99ac05c25ea2134c70a4894549020f01309cf",
+        "rows": 9,
+        "columns": 5,
+        "notes": [
+          "Source: Author's construction from NLFS public-use variables and ISCO-08 occupational structure."
+        ]
+      },
+      {
+        "caption": "Table 3. Overeducation estimates among employed graduates under alternative definitions",
+        "sha256": "3c3af3fde53c092f9c3d963b00520499ca0f256a40edc35add573177c6b2ccf4",
+        "rows": 5,
+        "columns": 4,
+        "notes": [
+          "Note: Survey-weighted estimates. The four definitions use different benchmarks and should not be treated as interchangeable."
+        ]
+      },
+      {
+        "caption": "Table 4. Hierarchical overeducation estimate by NLFS quarter",
+        "sha256": "9f5ff89ab329d32674897ba1f625219639091292b8020c7f97cc2e5ce060cc1c",
+        "rows": 6,
+        "columns": 4,
+        "notes": [
+          "Note: Hierarchical realised-matches definition."
+        ]
+      },
+      {
+        "caption": "Table 5. Selected high-frequency occupations in the graduate sample",
+        "sha256": "ca0d18c0cae4aafa383dc137473cc15e2c953256b88108dc8fa4fbe8a95d85f4",
+        "rows": 11,
+        "columns": 4,
+        "notes": [
+          "Note: Top occupations by weighted population in the occupation-coded graduate sample. Hierarchical realised-matches benchmark. Education ranks run from 0 (none) to 7 (doctorate)."
+        ]
+      },
+      {
+        "caption": "Table 6. Adjusted earnings association under alternative mismatch definitions",
+        "sha256": "7f1970958299fd4f0f91ac0db67391f5c3d8b124278b805122c4767cd115b9b3",
+        "rows": 5,
+        "columns": 5,
+        "notes": [
+          "Note: Weighted least squares on log monthly-equivalent exact earnings, Q1–Q2 2025. Common controls: years-equivalent education, age and age squared, sex, urban residence, quarter, state and industry. PSU-cluster robust standard errors. Percent differences are exp(coefficient) − 1."
+        ]
+      },
+      {
+        "caption": "Table 7. Supporting ORU earnings model",
+        "sha256": "527e08ddebcdbce3489ecf3244b692156e48a51bf85f6b307a94de82f7de5b10",
+        "rows": 6,
+        "columns": 4,
+        "notes": [
+          "Note: Paid-worker sample, N = 2,590. The model separates required, surplus and deficit education. Wald test of H0: beta_R = beta_O: F(1, 934) = 3.40, p = .0655; equality is not rejected at the 5% level. This is supporting associational evidence, not a graduate-only causal model."
+        ]
+      },
+      {
+        "caption": "Table A1. Key analytical decisions",
+        "sha256": "0c3c0f0dff58eb3d2c2806085c35b41bd5c74a61c998aa8eec9b70e1013327f5",
+        "rows": 10,
+        "columns": 2,
+        "notes": [
+          "Source: Author's analytical protocol and reproducibility files."
+        ]
+      }
+    ],
+    "figures": [
+      "a1673292983c7a0982bab08c941c4853674836c9306c4881f87bf68e0347c5b4",
+      "2fc5659071a1bac35a714d3a08bbd26d0bcf3e0d8b50d72c75286e4c8ce9f170",
+      "97e678357177d46d6b8f7bf2f153a1daa1bfdc61b5cd375964e87167052cc0b7"
+    ]
+  },
+  "minimum-wage-employment-informality": {
+    "tables": [
+      {
+        "caption": "Table 1. Earnings harmonisation diagnostics by quarter",
+        "sha256": "3d7d1fddc22152e8fdebd4db84a14438f8d3b7c57c904b56e60bf3b319c5a037",
+        "rows": 11,
+        "columns": 6
+      },
+      {
+        "caption": "Table 2. Survey-weighted national descriptive trends",
+        "sha256": "7cc0a3d0cd9ec0d3972a7d93bf5f9fea9bef02b815e6b7f3197655af99e6a18c",
+        "rows": 11,
+        "columns": 6
+      },
+      {
+        "caption": "Table 3. Main exposure-based difference-in-differences estimates",
+        "sha256": "1cb0f3af0a87e37d3abd936b2136d31c285816876be0e825aa242cafd91cc912",
+        "rows": 8,
+        "columns": 5
+      },
+      {
+        "caption": "Table 4. Alternative timing and state-specific linear-trend robustness",
+        "sha256": "a113aa889f64f5cd5de30899e061c3d46c188ce13255a10b76339251a64561f6",
+        "rows": 8,
+        "columns": 5
+      },
+      {
+        "caption": "Table 5. Q4 2024 same-instrument robustness",
+        "sha256": "2ad6ed625c1b1d90551245985ff9ba8c4f4bc9b7f605ec1c209eba0de799ae76",
+        "rows": 8,
+        "columns": 4
+      },
+      {
+        "caption": "Table 6. Youth triple-difference estimates",
+        "sha256": "395b88ab3ed0d4ea1536400043de66ec5ffc81e18e236bf9ed5c663877197980",
+        "rows": 8,
+        "columns": 4
+      },
+      {
+        "caption": "Table A1. Core analysis variables",
+        "sha256": "2a47fd45e7cb9387e4f06c5779be69fef786dc0e0a492f3c532de24a7ff99a20",
+        "rows": 9,
+        "columns": 2
+      }
+    ],
+    "figures": [
+      "42ef2b15deeae2b7fa814a669eb6f948fa17b9cc3329373c857d9d6156f898f5",
+      "40faeebb8d487830b339ae8549d7a02f4ef0267524ae904373605c2c8a573838",
+      "f90b174c07bf891792acff3e67b04f3fad2c48e6986cf45c01c88bd4f16871ea",
+      "52ac9d2c8913161ff0e74fd0e31c6059a09273ba85f4a64dba755ba53ce844f7",
+      "c667ae5f5bf1cc4fffd80e6c01168c340ac79535d1e44a477b4ecf008f2d840b"
+    ]
+  },
+  "generative-ai-graduate-jobs": {
+    "tables": [
+      {
+        "caption": "Table 1. Sample construction and occupation-code coverage",
+        "sha256": "a74926aa773fe53717a95b49d40bc2e7d6f4790416234d2317de68dba3014b40",
+        "rows": 6,
+        "columns": 5
+      },
+      {
+        "caption": "Table 2. Weighted distribution of graduate employment by GenAI exposure category",
+        "sha256": "7904b3950a03e0c6c383c9b31bc2f4df99e6ce51c00388e35b949d91386dbc60",
+        "rows": 7,
+        "columns": 5
+      },
+      {
+        "caption": "Table 3. Largest high-exposure graduate occupations",
+        "sha256": "ca2254208a619c5dfa0c45e514b0d9c92153e8f81c5ca05925efa47c4914473d",
+        "rows": 11,
+        "columns": 4
+      },
+      {
+        "caption": "Table 4. Selected weighted regression results",
+        "sha256": "4fd24c57668fee42b8c049a56020b63154c49ae317ff6933d4b551eee4b25fbe",
+        "rows": 11,
+        "columns": 5
+      }
+    ],
+    "figures": [
+      "ef55a19152e1a98fcee41eeedc26a1c42c75b6542488de21461a7886c7b80b95",
+      "8fc86df0389c3eb5ff5c00fe8a5bf9d337711dae87ed3e97d6f6fe9562218723",
+      "5f02167b78bb27fc8bd825902564aa2172cf9615137d7fc85a6fa21f0112a34a",
+      "041cb8c5d21fc0a2e7d969585d292593160a4e14fb03253fb11498a482381e56"
+    ]
+  }
+}

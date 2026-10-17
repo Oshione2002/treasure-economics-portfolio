@@ -178,8 +178,17 @@ Model estimates are not rerun or changed.
 These pages reuse `article-detail.js` for sticky contents and mobile section
 selection, with isolated table/figure styles in `assets/portfolio-articles.css`.
 All source tables remain semantic, keyboard-scrollable and readable without
-JavaScript. The 25 data tables and 19 published charts come from the reviewed documents,
+JavaScript. The 31 data tables and 19 published charts come from the reviewed documents,
 not redrawn with invented data. The M02 dietary-diversity chart shows both visits.
+
+All five personal articles include every table and chart from their corresponding
+full papers: M01 7 tables / 3 charts, M02 5 / 4, M04 8 / 3, M09 7 / 5, and P08 4 / 4.
+M01 and M04 use the unabridged full-paper tables, including sample construction,
+variable definitions and appendix tables, with original numbering and notes.
+Appendix tables sit beside the relevant discussion within the eight-section layout.
+The full-paper table grid and chart hashes are recorded in
+`tests/portfolio-full-paper-manifest.json`; the static checks verify actual table
+cells, rows, columns, source notes and image bytes rather than relying on counts.
 
 Only the article text and embedded aggregate figures are published. Word files,
 full academic manuscripts, household/firm datasets, Stata logs, scripts and ZIP
