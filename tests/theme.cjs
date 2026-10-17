@@ -112,6 +112,8 @@ assert.match(css,/@media\(max-width:760px\)/);
 assert.match(css,/html\[data-theme="dark"\] \.article-detail-meta,\s*html\[data-theme="dark"\] \.abstract-meta,\s*html\[data-theme="dark"\] \.research-post-meta\{display:block;background:transparent;padding:0;color:#ff866e\}/,'Research/article type labels have no pale box or badge padding');
 for(const value of ['#20211f','#282922','#f2efe7','#b4b2a7','#515149'])assert.ok(css.includes(value));
 const styles=fs.readFileSync(path.join(root,'assets/styles.css'),'utf8');
+assert.match(styles,/\.wordmark strong\{[^}]*font-size:21px/,'Use the smaller Work-page wordmark size everywhere');
+assert.doesNotMatch(styles,/\.home-page \.wordmark strong/,'No larger homepage wordmark exception');
 assert.match(styles,/--signal:#e24d2f/);assert.match(styles,/--blue:#244d73/);
 for(const orange of ['#ff866e','#ffb5a6','#a93822','#9c3d29'])assert.ok(styles.includes(orange));
 console.log('PASS all 16 routes load the overlay last, brand shades are unchanged, source images are not filtered and mobile controls retain 44px targets');
