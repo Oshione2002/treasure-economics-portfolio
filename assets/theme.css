@@ -39,8 +39,8 @@ html[data-theme="dark"] .nav-links .nav-contact{color:#131412}
 html[data-theme="dark"] .button-light:hover{background:#36372f;color:var(--ink)}
 html[data-theme="dark"] .contact-layout>div{color:#131412}
 html[data-theme="dark"] .contact-layout a{border-bottom-color:currentColor}
-/* Retain the original deep orange lettering on a small, readable paper backing. */
-html[data-theme="dark"] .about-name{background:#f3f0e8;padding-inline:3px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+/* Keep the name highlighted without a pale badge in dark mode. */
+html[data-theme="dark"] .about-name{background:transparent;padding:0;color:#ff866e}
 /* Type labels stay unboxed, using an existing orange shade with dark-surface contrast. */
 html[data-theme="dark"] .article-detail-meta,
 html[data-theme="dark"] .abstract-meta,
@@ -59,4 +59,26 @@ html[data-theme="dark"] .research-chart-label{fill:#deddd5}
 /* Source PNG charts and portraits are not inverted, filtered or recoloured. */
 @media(max-width:760px){
   .nav-shell.open .theme-toggle{align-self:flex-start;margin-left:4px}
+}
+/* Shared content-safe hero baseline. Contact deliberately retains its own sizing. */
+:root{--site-hero-height:620px}
+body :is(.home-hero,.work-hero,.about-hero,.article-detail-hero,.abstract-hero,.research-post-hero,.detail-hero){
+  min-height:var(--site-hero-height);
+  display:flex;
+  align-items:center;
+}
+body :is(.article-detail-hero,.abstract-hero,.research-post-hero,.detail-hero){padding-block:48px}
+body :is(.work-hero-layout,.about-hero-layout){min-height:calc(var(--site-hero-height) - 1px);padding-block:0}
+body .about-hero-layout>div{padding-block:48px}
+body :is(.about-portrait,.work-hero-visual){position:relative;min-height:0}
+body :is(.about-portrait,.work-hero-visual) img{position:absolute;inset:0;width:100%;height:100%;min-height:0;object-fit:cover}
+@media(max-width:980px){:root{--site-hero-height:580px}}
+@media(max-width:760px){
+  :root{--site-hero-height:520px}
+  body :is(.article-detail-hero,.abstract-hero,.research-post-hero,.detail-hero){padding-block:40px}
+  /* Stacked photography and long text may grow instead of being cut off. */
+  body :is(.work-hero-layout,.about-hero-layout){min-height:0}
+  body .about-hero-layout>div{padding-block:48px}
+  body :is(.about-portrait,.work-hero-visual){margin-top:0}
+  body :is(.about-portrait,.work-hero-visual) img{position:static;height:320px;min-height:0}
 }
