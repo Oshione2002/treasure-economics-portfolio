@@ -12,8 +12,13 @@ class Element{
   setAttribute(name,value){this.attributes[name]=value;}
   appendChild(element){this.children.push(element);return element;}
   append(...elements){this.children.push(...elements);}
+  replaceChildren(...elements){this.children=[...elements];}
   addEventListener(name,fn){this.listeners[name]=fn;}
-  querySelector(selector){return selector==='[data-theme-select]'?this.children.flatMap(c=>c.children).find(c=>Object.hasOwn(c.attributes,'data-theme-select'))||null:null;}
+  querySelector(selector){
+    if(selector!=='[data-theme-toggle]')return null;
+    for(const child of this.children){if(Object.hasOwn(child.attributes,'data-theme-toggle'))return child;const nested=child.querySelector(selector);if(nested)return nested;}
+    return null;
+  }
 }
 function environment({stored=null,osDark=false,blocked=false,nav=true,loading=true,legacyMedia=false,noMedia=false}={}){
   const html=new Element('html'),navigation=new Element('nav');
@@ -24,8 +29,9 @@ function environment({stored=null,osDark=false,blocked=false,nav=true,loading=tr
   media[legacyMedia?'addListener':'addEventListener']=legacyMedia?fn=>{mediaListeners.change=fn}:(event,fn)=>{mediaListeners[event]=fn};
   const document={documentElement:html,readyState:loading?'loading':'complete',
     querySelector(selector){assert.equal(selector,'.site-header .nav-links');return nav?navigation:null;},
-    querySelectorAll(){return navigation.querySelector('[data-theme-select]')?[navigation.querySelector('[data-theme-select]')]:[];},
+    querySelectorAll(){return navigation.querySelector('[data-theme-toggle]')?[navigation.querySelector('[data-theme-toggle]')]:[];},
     createElement(tag){return new Element(tag);},
+    createElementNS(ns,tag){assert.equal(ns,'http://www.w3.org/2000/svg');return new Element(tag);},
     addEventListener(event,fn){documentListeners[event]=fn;},
   };
   const window={
@@ -36,8 +42,8 @@ function environment({stored=null,osDark=false,blocked=false,nav=true,loading=tr
   vm.runInNewContext(source,{document,window});
   return {html,navigation,documentListeners,windowListeners,writes,
     load(){documentListeners.DOMContentLoaded?.();},
-    select(){return navigation.querySelector('[data-theme-select]');},
-    choose(value){const select=this.select();select.value=value;select.listeners.change();},
+    toggle(){return navigation.querySelector('[data-theme-toggle]');},
+    choose(value){for(let i=0;i<3&&this.toggle().dataset.themeMode!==value;i++)this.toggle().listeners.click();assert.equal(this.toggle().dataset.themeMode,value);},
     os(value){media.matches=value;mediaListeners.change?.();},
     storage(value,eventKey=key){windowListeners.storage({key:eventKey,newValue:value});},
     changeStored(value){item=value;},
@@ -47,20 +53,31 @@ for(const [stored,osDark,expected] of [[null,false,'light'],[null,true,'dark'],[
   const e=environment({stored,osDark});
   assert.equal(e.html.dataset.theme,expected,'Resolve before DOM initialization');
   assert.equal(e.html.style.colorScheme,expected);assert.equal(e.navigation.children.length,0);
-  e.load();const select=e.select();assert.ok(select);
-  assert.equal(select.attributes['aria-label'],'Colour theme');assert.equal(select.children.length,3);
-  assert.deepEqual(select.children.map(x=>x.value),['system','light','dark']);
+  e.load();const button=e.toggle();assert.ok(button);
+  assert.equal(button.tag,'button');assert.equal(button.type,'button');
+  assert.match(button.attributes['aria-label'],/^Colour theme: .+\. Switch to (?:Light|Dark|System)\.$/);
+  assert.equal(button.attributes.title,button.attributes['aria-label']);assert.equal(button.children.length,1);
+  assert.equal(button.children[0].tag,'svg');assert.equal(button.children[0].attributes['aria-hidden'],'true');
+  assert.equal(button.textContent,undefined,'No visible text label');
   e.load();assert.equal(e.navigation.children.length,1,'No duplicate control');
 }
 const normal=environment();normal.load();
+const cycleButton=normal.toggle();
+assert.equal(cycleButton.dataset.themeMode,'system');
+assert.equal(cycleButton.children[0].children[0].tag,'rect','Monitor icon');
+cycleButton.listeners.click();assert.equal(cycleButton.dataset.themeMode,'light');assert.equal(cycleButton.children[0].children[0].tag,'circle','Sun icon');
+cycleButton.listeners.click();assert.equal(cycleButton.dataset.themeMode,'dark');assert.equal(cycleButton.children[0].children[0].tag,'path','Moon icon');
+cycleButton.listeners.click();assert.equal(cycleButton.dataset.themeMode,'system');
+assert.equal(normal.toggle(),cycleButton,'Button is retained while icons change');normal.writes.length=0;
 normal.os(true);assert.equal(normal.html.dataset.theme,'dark');
 normal.choose('light');assert.equal(normal.html.dataset.theme,'light');assert.deepEqual(normal.writes,['light']);
 normal.os(false);normal.os(true);assert.equal(normal.html.dataset.theme,'light','Explicit preference overrides OS');
 normal.choose('dark');assert.equal(normal.html.dataset.theme,'dark');
 normal.choose('system');normal.os(false);assert.equal(normal.html.dataset.theme,'light');
-normal.storage('dark');assert.equal(normal.html.dataset.theme,'dark');assert.equal(normal.select().value,'dark');
+normal.storage('dark');assert.equal(normal.html.dataset.theme,'dark');assert.equal(normal.toggle().dataset.themeMode,'dark');
 normal.storage('light','unrelated');assert.equal(normal.html.dataset.theme,'dark');
-normal.storage(null);assert.equal(normal.html.dataset.themePreference,'system');assert.equal(normal.select().value,'system');
+normal.storage(null);assert.equal(normal.html.dataset.themePreference,'system');assert.equal(normal.toggle().dataset.themeMode,'system');
+assert.match(normal.toggle().attributes['aria-label'],/System \(Light\)/);
 normal.storage('invalid');assert.equal(normal.html.dataset.themePreference,'system');
 normal.changeStored('dark');normal.windowListeners.pageshow({persisted:true});assert.equal(normal.html.dataset.theme,'dark');
 const denied=environment({blocked:true,osDark:true});denied.load();denied.choose('light');assert.equal(denied.html.dataset.theme,'light');assert.equal(denied.writes.length,0);
@@ -69,7 +86,7 @@ denied.windowListeners.pageshow({persisted:true});assert.equal(denied.html.datas
 const old=environment({legacyMedia:true});old.os(true);assert.equal(old.html.dataset.theme,'dark');
 assert.equal(environment({noMedia:true,loading:false}).html.dataset.theme,'light');
 const redirect=environment({nav:false,osDark:true});redirect.load();assert.equal(redirect.html.dataset.theme,'dark');
-console.log('PASS theme logic: early apply, 3 preferences, persistence, OS changes, cross-tab sync, BFCache, invalid/blocked storage and legacy media API');
+console.log('PASS icon-only Monitor/Sun/Moon cycle, retained native button, labels/tooltips, early apply, persistence, OS changes, cross-tab sync and blocked-storage fallbacks');
 const pages=fs.readdirSync(root).filter(file=>file.endsWith('.html'));
 assert.equal(pages.length,16);
 for(const page of pages){
@@ -84,7 +101,10 @@ for(const page of pages){
 assert.doesNotMatch(css,/--(?:signal|blue|white)\s*:/,'Brand colours must not be overridden');
 assert.doesNotMatch(css,/(?:^|[;{\s])filter\s*:|mix-blend-mode\s*:/,'Never invert chart or portrait pixels');
 assert.match(css,/\.site-footer\{background:#131412\}/);
-assert.match(css,/\.nav-shell\.open \.theme-control/);
+assert.match(css,/\.nav-shell\.open \.theme-toggle/);
+assert.doesNotMatch(source,/data-theme-select|createElement\('(?:label|select|option)'\)/);
+assert.doesNotMatch(css,/\.theme-control/);
+assert.match(css,/\.theme-toggle[^}]*width:44px/);
 assert.match(css,/min-height:44px/);
 assert.match(css,/@media\(max-width:760px\)/);
 for(const value of ['#20211f','#282922','#f2efe7','#b4b2a7','#515149'])assert.ok(css.includes(value));

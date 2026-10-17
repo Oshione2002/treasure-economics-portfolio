@@ -200,12 +200,15 @@ structure, asset, category, navigation and confidentiality-boundary checks.
 
 All routes load `assets/theme.css` and the early, parser-blocking `assets/theme.js`.
 The theme script resolves System / Light / Dark before the body is parsed and adds
-an accessible native theme selector to the navigation after DOM initialization.
-On mobile, the selector is inside the existing navigation menu. System is the
+one icon-only native button to the navigation after DOM initialization. Clicking
+cycles Monitor (System) -> Sun (Light) -> Moon (Dark) -> Monitor. There is no visible
+label or dropdown. A dynamic accessible name and tooltip state the current mode
+and the next action; native Enter/Space activation and a 44px target are retained.
+On mobile, the button is inside the existing navigation menu. System is the
 default; explicit choices persist in localStorage and sync across tabs. OS theme
 changes are followed only in System mode. Invalid or unavailable storage never
 prevents reading or switching. Without JavaScript, the original light site remains
-readable and no non-functional theme selector is shown.
+readable and no non-functional theme button is shown.
 
 The warm-charcoal dark palette changes neutral surfaces, text and borders only.
 Every original orange shade and the original blue remain unchanged. Deep-orange
