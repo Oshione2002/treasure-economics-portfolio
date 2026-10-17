@@ -1,0 +1,39 @@
+/* Decorative desk imagery follows the existing theme; the About portrait is unchanged. */
+.home-page .home-hero{
+  --hero-ink:#16181b;
+  --hero-copy:#41423e;
+  --hero-surface:#f3f0e8;
+  --hero-wash:linear-gradient(90deg,rgba(243,240,232,.94) 0%,rgba(243,240,232,.88) 38%,rgba(243,240,232,.28) 66%,rgba(243,240,232,0) 80%);
+  background-color:var(--hero-surface);
+  background-image:var(--hero-wash),url("home-research-desk-light.webp");
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
+  color:var(--hero-ink);
+}
+html[data-theme="dark"] .home-page .home-hero{
+  --hero-ink:#f2efe7;
+  --hero-copy:#deddd5;
+  --hero-surface:#20211f;
+  --hero-wash:linear-gradient(90deg,rgba(32,33,31,.94) 0%,rgba(32,33,31,.88) 38%,rgba(32,33,31,.28) 66%,rgba(32,33,31,0) 80%);
+  background-image:var(--hero-wash),url("home-research-desk-dark.webp");
+}
+.home-page .home-hero .hero-layout{display:block;min-height:0}
+.home-page .home-hero .hero-copy{width:60%;max-width:740px;padding:72px 0}
+.home-page .home-hero h1{font-size:clamp(2.8rem,4.1vw,4.1rem);color:var(--hero-ink)}
+.home-page .home-hero .hero-intro{color:var(--hero-copy)}
+.home-page .home-hero .button-row{gap:12px}
+.home-page .home-hero .button-light{color:var(--hero-ink);border-color:var(--hero-ink);background:var(--hero-surface)}
+.home-page .home-hero .button-light:hover{background:var(--hero-ink);color:var(--hero-surface)}
+.home-page .home-hero .button:focus-visible{outline:3px solid var(--hero-ink);outline-offset:4px}
+@media(max-width:980px){
+  .home-page .home-hero .hero-copy{width:65%;padding:64px 0}
+  .home-page .home-hero h1{font-size:clamp(2.6rem,4.6vw,3.5rem)}
+}
+@media(max-width:760px){
+  /* Keep detail subordinate to the copy when both share a narrow screen. */
+  .home-page .home-hero{--hero-wash:linear-gradient(90deg,rgba(243,240,232,.96),rgba(243,240,232,.88));background-position:left center}
+  html[data-theme="dark"] .home-page .home-hero{--hero-wash:linear-gradient(90deg,rgba(32,33,31,.96),rgba(32,33,31,.88))}
+  .home-page .home-hero .hero-copy{width:100%;max-width:600px;padding:56px 0}
+  .home-page .home-hero h1{font-size:clamp(2.5rem,8.5vw,3.6rem)}
+}
