@@ -195,3 +195,24 @@ full academic manuscripts, household/firm datasets, Stata logs, scripts and ZIP
 replication packages stay outside the public repository. No publication or
 peer-review status is asserted. Run `node tests/portfolio-articles.cjs` for source
 structure, asset, category, navigation and confidentiality-boundary checks.
+
+## Light and dark appearance
+
+All routes load `assets/theme.css` and the early, parser-blocking `assets/theme.js`.
+The theme script resolves System / Light / Dark before the body is parsed and adds
+an accessible native theme selector to the navigation after DOM initialization.
+On mobile, the selector is inside the existing navigation menu. System is the
+default; explicit choices persist in localStorage and sync across tabs. OS theme
+changes are followed only in System mode. Invalid or unavailable storage never
+prevents reading or switching. Without JavaScript, the original light site remains
+readable and no non-functional theme selector is shown.
+
+The warm-charcoal dark palette changes neutral surfaces, text and borders only.
+Every original orange shade and the original blue remain unchanged. Deep-orange
+name/type labels retain their colour on a paper backing; text on orange buttons
+is dark for contrast. Blue sections and source charts/photos are not recoloured.
+The shared theme overlay does not change article data, filtering or sticky offsets.
+
+Run `node tests/theme.cjs` for preference, OS-change, cross-tab, blocked-storage,
+early-initialization, route-loading and brand-colour checks. Existing portfolio
+tests continue to verify all 31 full-paper tables and 19 source chart images.
